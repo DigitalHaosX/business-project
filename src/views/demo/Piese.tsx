@@ -1,7 +1,14 @@
 import React from 'react'
+import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
 
 const Sarcini = () => {
+    const handleEdit = () => {
+        console.log('click')
+    }
+    const handleDelete = () => {
+        console.log('click')
+    }
     const columns = [
         {
             header: 'ID',
@@ -22,6 +29,22 @@ const Sarcini = () => {
         {
             header: 'Actiuni',
             accessorKey: 'actiuni',
+            cell: () => (
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => handleEdit()}
+                        className="text-blue-500 hover:text-blue-700"
+                    >
+                        <HiPencil />
+                    </button>
+                    <button
+                        onClick={() => handleDelete()}
+                        className="text-red-500 hover:text-red-700"
+                    >
+                        <HiTrash />
+                    </button>
+                </div>
+            ),
         },
     ]
 
@@ -140,9 +163,9 @@ const Sarcini = () => {
             <div
                 className="mt-4"
                 style={{
-                    border: '1px solid #d1d5db', // Tailwind's "gray-300" color
-                    borderRadius: '8px', // Optional: adds rounded corners
-                    padding: '16px', // Optional: adds padding inside the border
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    padding: '16px',
                 }}
             >
                 <CustomTable columns={columns} data={data} />

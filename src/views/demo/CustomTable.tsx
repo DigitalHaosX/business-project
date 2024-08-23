@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import Table from '@/components/ui/Table'
 import Pagination from '@/components/ui/Pagination'
 import Select from '@/components/ui/Select'
@@ -43,6 +43,12 @@ interface DebouncedInputProps
     debounce?: number
 }
 
+interface CustomTableProps {
+    columns: ColumnDef<any>[]
+    data: any[]
+    actionButton?: React.ReactNode
+}
+
 const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
 function IndeterminateCheckbox({
@@ -82,15 +88,13 @@ function DebouncedInput({
     }, [value, debounce, onChange])
 
     return (
-        <div className="flex justify-end">
-            <div className="flex items-center mb-4">
-                <span className="mr-2">Search:</span>
-                <Input
-                    {...props}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                />
-            </div>
+        <div className="flex items-center">
+            <span className="mr-2">Search:</span>
+            <Input
+                {...props}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            />
         </div>
     )
 }
@@ -102,6 +106,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 }
 
 const pageSizeOptions = [
+    { value: 5, label: '5 / page' },
     { value: 10, label: '10 / page' },
     { value: 20, label: '20 / page' },
     { value: 30, label: '30 / page' },
@@ -109,7 +114,11 @@ const pageSizeOptions = [
     { value: 50, label: '50 / page' },
 ]
 
-const CustomTable = ({ columns, data }) => {
+const CustomTable: React.FC<CustomTableProps> = ({
+    columns,
+    data,
+    actionButton,
+}) => {
     const [rowSelection, setRowSelection] = useState({})
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -173,17 +182,22 @@ const CustomTable = ({ columns, data }) => {
         table.setPageIndex(page - 1)
     }
 
-    const onSelectChange = (value = 0) => {
+    const onSelectChange = (value: number) => {
         table.setPageSize(Number(value))
     }
 
     return (
         <div>
-            <DebouncedInput
-                value={globalFilter ?? ''}
-                placeholder="Search all columns..."
-                onChange={(value) => setGlobalFilter(String(value))}
-            />
+            <div className="flex items-center justify-between mb-4">
+                {actionButton && <div>{actionButton}</div>}
+                <div className="flex items-center ml-auto">
+                    <DebouncedInput
+                        value={globalFilter ?? ''}
+                        placeholder="Search all columns..."
+                        onChange={(value) => setGlobalFilter(String(value))}
+                    />
+                </div>
+            </div>
             <Table>
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -192,14 +206,12 @@ const CustomTable = ({ columns, data }) => {
                                 <Th key={header.id} colSpan={header.colSpan}>
                                     {header.isPlaceholder ? null : (
                                         <div
-                                            {...{
-                                                className:
-                                                    header.column.getCanSort()
-                                                        ? 'cursor-pointer select-none'
-                                                        : '',
-                                                onClick:
-                                                    header.column.getToggleSortingHandler(),
-                                            }}
+                                            className={
+                                                header.column.getCanSort()
+                                                    ? 'cursor-pointer select-none flex items-center'
+                                                    : ''
+                                            }
+                                            onClick={header.column.getToggleSortingHandler()}
                                         >
                                             {flexRender(
                                                 header.column.columnDef.header,
@@ -247,7 +259,9 @@ const CustomTable = ({ columns, data }) => {
                                 table.getState().pagination.pageSize,
                         )}
                         options={pageSizeOptions}
-                        onChange={(option) => onSelectChange(option?.value)}
+                        onChange={(option) =>
+                            onSelectChange(option?.value || 10)
+                        }
                     />
                 </div>
             </div>

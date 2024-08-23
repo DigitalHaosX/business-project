@@ -1,7 +1,16 @@
+import { Button } from '@/components/ui'
 import React from 'react'
+import { HiPencil, HiTrash } from 'react-icons/hi'
+import { text } from 'stream/consumers'
 import CustomTable from './CustomTable'
 
 const Clienti = () => {
+    const handleEdit = () => {
+        console.log('click')
+    }
+    const handleDelete = () => {
+        console.log('click')
+    }
     const columns = [
         {
             header: 'ID',
@@ -22,6 +31,22 @@ const Clienti = () => {
         {
             header: 'Actiuni',
             accessorKey: 'actiuni',
+            cell: () => (
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => handleEdit()}
+                        className="text-blue-500 hover:text-blue-700"
+                    >
+                        <HiPencil />
+                    </button>
+                    <button
+                        onClick={() => handleDelete()}
+                        className="text-red-500 hover:text-red-700"
+                    >
+                        <HiTrash />
+                    </button>
+                </div>
+            ),
         },
     ]
 
@@ -132,6 +157,9 @@ const Clienti = () => {
             actiuni: 'Edit/Delete',
         },
     ]
+    const handleAddRow = () => {
+        // Logic to add a new row
+    }
     return (
         <div>
             <div>
@@ -145,7 +173,18 @@ const Clienti = () => {
                     padding: '16px',
                 }}
             >
-                <CustomTable columns={columns} data={data} />
+                <CustomTable
+                    columns={columns}
+                    data={data}
+                    actionButton={
+                        <Button
+                            onClick={handleAddRow}
+                            style={{ background: '#0188cc', color: 'white' }}
+                        >
+                            Adauga clienti
+                        </Button>
+                    }
+                />
             </div>
         </div>
     )

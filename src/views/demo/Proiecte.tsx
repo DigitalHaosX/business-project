@@ -1,101 +1,156 @@
-import { Card } from '@/components/ui'
+import { useNavigate } from 'react-router-dom'
+import { Button, Card } from '@/components/ui'
 import CustomTable from './CustomTable'
+import { ColumnDef } from '@tanstack/react-table'
+import { HiPencil, HiTrash } from 'react-icons/hi'
+
+interface Proiect {
+    id: string
+    cheie: string
+    categorie: string
+    status: string
+    actiuni: string
+}
 
 const Proiecte = () => {
-    const columns = [
+    const navigate = useNavigate()
+
+    const handleIdClick = (id: string) => {
+        navigate(`/proiecte/${id}`)
+    }
+
+    const handleEdit = () => {
+        console.log('click')
+    }
+    const handleDelete = () => {
+        console.log('click')
+    }
+
+    const columns: ColumnDef<Proiect>[] = [
         {
-            header: 'Task Name',
-            accessorKey: 'taskName',
+            header: 'ID',
+            accessorKey: 'id',
+            cell: ({ row }) => (
+                <span
+                    onClick={() => handleIdClick(row.original.id)}
+                    className="text-blue-500 cursor-pointer hover:underline"
+                >
+                    {row.original.id}
+                </span>
+            ),
+        },
+        {
+            header: 'Cheie',
+            accessorKey: 'cheie',
+        },
+        {
+            header: 'Categorie',
+            accessorKey: 'categorie',
         },
         {
             header: 'Status',
             accessorKey: 'status',
         },
         {
-            header: 'Assigned To',
-            accessorKey: 'assignedTo',
-        },
-        {
-            header: 'Due Date',
-            accessorKey: 'dueDate',
+            header: 'Actiuni',
+            accessorKey: 'actiuni',
+            cell: () => (
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => handleEdit()}
+                        className="text-blue-500 hover:text-blue-700"
+                    >
+                        <HiPencil />
+                    </button>
+                    <button
+                        onClick={() => handleDelete()}
+                        className="text-red-500 hover:text-red-700"
+                    >
+                        <HiTrash />
+                    </button>
+                </div>
+            ),
         },
     ]
 
-    const data = [
+    const data: Proiect[] = [
         {
-            taskName: 'Task 1',
-            status: 'Pending',
-            assignedTo: 'John Doe',
-            dueDate: '2024-09-10',
+            id: '11',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 2',
-            status: 'In Progress',
-            assignedTo: 'Jane Smith',
-            dueDate: '2024-09-12',
+            id: '12',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 3',
-            status: 'Completed',
-            assignedTo: 'Alice Johnson',
-            dueDate: '2024-09-14',
+            id: '13',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 1',
-            status: 'Pending',
-            assignedTo: 'John Doe',
-            dueDate: '2024-09-10',
+            id: '14',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 2',
-            status: 'In Progress',
-            assignedTo: 'Jane Smith',
-            dueDate: '2024-09-12',
+            id: '15',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 3',
-            status: 'Completed',
-            assignedTo: 'Alice Johnson',
-            dueDate: '2024-09-14',
+            id: '16',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 1',
-            status: 'Pending',
-            assignedTo: 'John Doe',
-            dueDate: '2024-09-10',
+            id: '17',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 2',
-            status: 'In Progress',
-            assignedTo: 'Jane Smith',
-            dueDate: '2024-09-12',
+            id: '18',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 3',
-            status: 'Completed',
-            assignedTo: 'Alice Johnson',
-            dueDate: '2024-09-14',
+            id: '19',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         {
-            taskName: 'Task 1',
-            status: 'Pending',
-            assignedTo: 'John Doe',
-            dueDate: '2024-09-10',
-        },
-        {
-            taskName: 'Task 2',
-            status: 'In Progress',
-            assignedTo: 'Jane Smith',
-            dueDate: '2024-09-12',
-        },
-        {
-            taskName: 'Task 3',
-            status: 'Completed',
-            assignedTo: 'Alice Johnson',
-            dueDate: '2024-09-14',
+            id: '20',
+            cheie: 'fsdF7686FSD',
+            categorie: 'Pro edition retail',
+            status: 'used',
+            actiuni: 'edit/delete',
         },
         // more data...
     ]
+
+    const handleAddRow = () => {
+        console.log('click')
+    }
+
     return (
         <div>
             <div>
@@ -104,7 +159,7 @@ const Proiecte = () => {
             <div className="flex flex-row justify-between">
                 <Card
                     clickable
-                    className="hover:shadow-lg transition duration-150 ease-in-out w-[300px] h-[200px]"
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">Proiecte</h5>
@@ -112,7 +167,7 @@ const Proiecte = () => {
                 </Card>
                 <Card
                     clickable
-                    className="hover:shadow-lg transition duration-150 ease-in-out w-[300px] h-[200px]"
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">
@@ -122,7 +177,7 @@ const Proiecte = () => {
                 </Card>
                 <Card
                     clickable
-                    className="hover:shadow-lg transition duration-150 ease-in-out w-[300px] h-[200px]"
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">Proiecte in progres</h5>
@@ -130,7 +185,7 @@ const Proiecte = () => {
                 </Card>
                 <Card
                     clickable
-                    className="hover:shadow-lg transition duration-150 ease-in-out w-[300px] h-[200px]"
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">Proiecte finalizate</h5>
@@ -140,12 +195,23 @@ const Proiecte = () => {
             <div
                 className="mt-4"
                 style={{
-                    border: '1px solid #d1d5db', // Tailwind's "gray-300" color
-                    borderRadius: '8px', // Optional: adds rounded corners
-                    padding: '16px', // Optional: adds padding inside the border
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    padding: '16px',
                 }}
             >
-                <CustomTable columns={columns} data={data} />
+                <CustomTable
+                    columns={columns}
+                    data={data}
+                    actionButton={
+                        <Button
+                            onClick={handleAddRow}
+                            style={{ background: '#0188cc', color: 'white' }}
+                        >
+                            Adauga proiect
+                        </Button>
+                    }
+                />
             </div>
         </div>
     )

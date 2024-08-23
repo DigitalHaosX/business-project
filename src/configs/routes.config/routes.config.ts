@@ -20,6 +20,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'proiecteDetails', // Unique key for the route
+        path: '/proiecte/:id', // Dynamic route that captures the 'id' parameter
+        component: lazy(() => import('@/views/demo/ProiecteDetails')), // Component to render for this route
+        authority: [],
+    },
+    {
         key: 'documente',
         path: '/documente',
         component: lazy(() => import('@/views/demo/Documente')),
@@ -56,12 +62,6 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'roluri',
-        path: '/roluri',
-        component: lazy(() => import('@/views/demo/Roluri')),
-        authority: [],
-    },
-    {
         key: 'statusuri',
         path: '/statusuri',
         component: lazy(() => import('@/views/demo/Statusuri')),
@@ -75,13 +75,19 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'sabloane-documente.item1',
+        key: 'tip-proiecte.item1',
+        path: '/tip-proiecte',
+        component: lazy(() => import('@/views/demo/TipProiecte')),
+        authority: [],
+    },
+    {
+        key: 'sabloane-documente.item2',
         path: '/sabloane-documente',
         component: lazy(() => import('@/views/demo/SabloaneDocumente')),
         authority: [],
     },
     {
-        key: 'sabloane-sarcini.item2',
+        key: 'sabloane-sarcini.item3',
         path: '/sabloane-sarcini',
         component: lazy(() => import('@/views/demo/SabloaneSarcini')),
         authority: [],

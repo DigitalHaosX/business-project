@@ -1,10 +1,10 @@
 import Dropdown from '@/components/ui/Dropdown'
-import { HiChevronDown } from 'react-icons/hi'
+import { HiDotsVertical } from 'react-icons/hi'
 
 const CustomDropdown = ({ items }) => {
     const Toggle = (
         <div className="flex items-center cursor-pointer">
-            <HiChevronDown className="ml-2" />
+            <HiDotsVertical className="ml-2" />
         </div>
     )
 

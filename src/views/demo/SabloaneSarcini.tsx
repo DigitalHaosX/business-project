@@ -2,7 +2,6 @@ import React from 'react'
 import { Card } from '@/components/ui'
 import CustomDropdown from './CustomDropdown'
 import Button from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
 
 const SabloaneSarcini = () => {
     const dropdownItems = [
@@ -19,7 +18,73 @@ const SabloaneSarcini = () => {
                     Sablon nou +
                 </Button>
             </div>
-            <div className="flex flex-row justify-start gap-2 ">
+            <div className="flex flex-row justify-start gap-4 ">
+                <Card
+                    header={
+                        <div className="flex justify-between items-center">
+                            <span className="text-xl font-bold text-black">
+                                Deviz
+                            </span>
+                            <CustomDropdown items={dropdownItems} />
+                        </div>
+                    }
+                    clickable={true}
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
+                    onClick={(e) => console.log('Card Clickable', e)}
+                >
+                    <p className=" text-xl font-bold">Status: Draft</p>
+                    <p className="text-xl font-bold">Creat de: XYZ</p>
+                    <p className=" text-xl font-bold">
+                        Creat la data: 15 Iul 2024
+                    </p>
+                    <p className=" text-xl font-bold">
+                        Creat la data de: 15 Iul 2024
+                    </p>
+                </Card>
+                <Card
+                    header={
+                        <div className="flex justify-between items-center">
+                            <span className="text-xl font-bold text-black">
+                                Deviz
+                            </span>
+                            <CustomDropdown items={dropdownItems} />
+                        </div>
+                    }
+                    clickable={true}
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
+                    onClick={(e) => console.log('Card Clickable', e)}
+                >
+                    <p className=" text-xl font-bold">Status: Draft</p>
+                    <p className="text-xl font-bold">Creat de: XYZ</p>
+                    <p className=" text-xl font-bold">
+                        Creat la data: 15 Iul 2024
+                    </p>
+                    <p className=" text-xl font-bold">
+                        Creat la data de: 15 Iul 2024
+                    </p>
+                </Card>
+                <Card
+                    header={
+                        <div className="flex justify-between items-center">
+                            <span className="text-xl font-bold text-black">
+                                Deviz
+                            </span>
+                            <CustomDropdown items={dropdownItems} />
+                        </div>
+                    }
+                    clickable={true}
+                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
+                    onClick={(e) => console.log('Card Clickable', e)}
+                >
+                    <p className=" text-xl font-bold">Status: Draft</p>
+                    <p className="text-xl font-bold">Creat de: XYZ</p>
+                    <p className=" text-xl font-bold">
+                        Creat la data: 15 Iul 2024
+                    </p>
+                    <p className=" text-xl font-bold">
+                        Creat la data de: 15 Iul 2024
+                    </p>
+                </Card>
                 <Card
                     header={
                         <div className="flex justify-between items-center">
