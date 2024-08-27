@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui'
 import React from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
-import { text } from 'stream/consumers'
 import CustomTable from './CustomTable'
 
 const Clienti = () => {
@@ -34,14 +33,14 @@ const Clienti = () => {
             cell: () => (
                 <div className="flex space-x-2">
                     <button
-                        onClick={() => handleEdit()}
                         className="text-blue-500 hover:text-blue-700"
+                        onClick={() => handleEdit()}
                     >
                         <HiPencil />
                     </button>
                     <button
-                        onClick={() => handleDelete()}
                         className="text-red-500 hover:text-red-700"
+                        onClick={() => handleDelete()}
                     >
                         <HiTrash />
                     </button>
@@ -178,8 +177,8 @@ const Clienti = () => {
                     data={data}
                     actionButton={
                         <Button
-                            onClick={handleAddRow}
                             style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleAddRow}
                         >
                             Adauga clienti
                         </Button>

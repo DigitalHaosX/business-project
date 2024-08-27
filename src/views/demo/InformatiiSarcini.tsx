@@ -1,15 +1,16 @@
+import { Button } from '@/components/ui'
 import React from 'react'
-import { Card } from '@/components/ui'
-import CustomTable from './CustomTable'
 import { HiPencil, HiTrash } from 'react-icons/hi'
+import CustomTable from './CustomTable'
 
-const Sarcini = () => {
+const InformatiiSarcini = () => {
     const handleEdit = () => {
         console.log('Edit')
     }
     const handleDelete = () => {
         console.log('Delete')
     }
+
     const columns = [
         {
             header: 'ID',
@@ -26,6 +27,10 @@ const Sarcini = () => {
         {
             header: 'Status',
             accessorKey: 'status',
+        },
+        {
+            header: 'Operator',
+            accessorKey: 'operator',
         },
         {
             header: 'Actiuni',
@@ -55,6 +60,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsada',
             categorie: 'alpha',
             status: 'Completed',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -62,6 +68,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsadx',
             categorie: 'beta',
             status: 'In progress',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -69,6 +76,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsady',
             categorie: 'gama',
             status: 'Pending',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -76,6 +84,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsada',
             categorie: 'alpha',
             status: 'Completed',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -83,6 +92,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsadx',
             categorie: 'beta',
             status: 'In progress',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -90,6 +100,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsady',
             categorie: 'gama',
             status: 'Pending',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -97,6 +108,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsada',
             categorie: 'alpha',
             status: 'Completed',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -104,6 +116,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsadx',
             categorie: 'beta',
             status: 'In progress',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -111,6 +124,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsady',
             categorie: 'gama',
             status: 'Pending',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -118,6 +132,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsada',
             categorie: 'alpha',
             status: 'Completed',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -125,6 +140,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsadx',
             categorie: 'beta',
             status: 'In progress',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -132,6 +148,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsady',
             categorie: 'gama',
             status: 'Pending',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -139,6 +156,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsada',
             categorie: 'alpha',
             status: 'Completed',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -146,6 +164,7 @@ const Sarcini = () => {
             cheie: 'dasd786786dsadx',
             categorie: 'beta',
             status: 'In progress',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
         {
@@ -153,72 +172,15 @@ const Sarcini = () => {
             cheie: 'dasd786786dsady',
             categorie: 'gama',
             status: 'Pending',
+            operator: 'Xulescu',
             actiuni: 'Edit/Delete',
         },
     ]
+    const handleAddRow = () => {
+        console.log('click')
+    }
     return (
         <div>
-            <div>
-                <h3 className="text-3xl font-semibold mb-4">Sarcini</h3>
-            </div>
-            <div className="flex flex-row justify-between gap-4 ">
-                <Card
-                    header={
-                        <div className="flex justify-between items-center">
-                            <span className="text-3xl font-bold text-black">
-                                Sarcini
-                            </span>
-                        </div>
-                    }
-                    clickable={true}
-                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
-                >
-                    <p className=" text-3xl font-bold">45</p>
-                </Card>
-                <Card
-                    header={
-                        <div className="flex justify-between items-center">
-                            <span className="text-3xl font-bold text-black">
-                                Sarcini in asteptare
-                            </span>
-                        </div>
-                    }
-                    clickable={true}
-                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
-                >
-                    <p className=" text-3xl font-bold">10</p>
-                </Card>
-                <Card
-                    header={
-                        <div className="flex justify-between items-center">
-                            <span className="text-3xl font-bold text-black">
-                                Sarcini in progres
-                            </span>
-                        </div>
-                    }
-                    clickable={true}
-                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
-                >
-                    <p className=" text-3xl font-bold">5</p>
-                </Card>
-                <Card
-                    header={
-                        <div className="flex justify-between items-center">
-                            <span className="text-3xl font-bold text-black">
-                                Sarcini finalizate
-                            </span>
-                        </div>
-                    }
-                    clickable={true}
-                    className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
-                >
-                    <p className=" text-3xl font-bold">30</p>
-                </Card>
-            </div>
             <div
                 className="mt-4"
                 style={{
@@ -227,25 +189,21 @@ const Sarcini = () => {
                     padding: '16px',
                 }}
             >
-                <CustomTable columns={columns} data={data} />
-            </div>
-            <div>
-                <h3 className="text-3xl font-semibold mb-4 mt-4">
-                    Toate Sarcinile
-                </h3>
-            </div>
-            <div
-                className="mt-4"
-                style={{
-                    border: '1px solid #d1d5db',
-                    borderRadius: '8px',
-                    padding: '16px',
-                }}
-            >
-                <CustomTable columns={columns} data={data} />
+                <CustomTable
+                    columns={columns}
+                    data={data}
+                    actionButton={
+                        <Button
+                            style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleAddRow}
+                        >
+                            Adauga sarcina
+                        </Button>
+                    }
+                />
             </div>
         </div>
     )
 }
 
-export default Sarcini
+export default InformatiiSarcini

@@ -39,14 +39,14 @@ const TipProiecte = () => {
             cell: () => (
                 <div className="flex space-x-2">
                     <button
-                        onClick={() => handleEdit()}
                         className="text-blue-500 hover:text-blue-700"
+                        onClick={() => handleEdit()}
                     >
                         <HiPencil />
                     </button>
                     <button
-                        onClick={() => handleDelete()}
                         className="text-red-500 hover:text-red-700"
+                        onClick={() => handleDelete()}
                     >
                         <HiTrash />
                     </button>
@@ -169,10 +169,6 @@ const TipProiecte = () => {
         <div>
             <div>
                 <h3 className="text-3xl font-semibold mb-4">TipProiecte</h3>
-                <HiDocumentRemove />
-                <HiDotsVertical />
-                <HiPencil />
-                <HiTrash />
             </div>
             <div
                 className="mt-4"
@@ -187,8 +183,8 @@ const TipProiecte = () => {
                     data={data}
                     actionButton={
                         <Button
-                            onClick={handleAddRow}
                             style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleAddRow}
                         >
                             Adauga cheie
                         </Button>
