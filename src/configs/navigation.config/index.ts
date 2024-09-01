@@ -71,7 +71,7 @@ const navigationConfig: NavigationTree[] = [
     },
     {
         key: 'chat',
-        path: '/chat',
+        path: '/chat/ChatPage',
         title: 'Chat',
         translateKey: 'nav.chat',
         icon: 'singleMenu',

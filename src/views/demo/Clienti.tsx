@@ -1,15 +1,28 @@
 import { Button } from '@/components/ui'
-import React from 'react'
+import React, { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
+import ModalAddClienti from './ModalAddClienti'
 
 const Clienti = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const handleEdit = () => {
-        console.log('click')
+        console.log('Edit')
     }
+
     const handleDelete = () => {
-        console.log('click')
+        console.log('Delete')
     }
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+    }
+
     const columns = [
         {
             header: 'ID',
@@ -156,9 +169,7 @@ const Clienti = () => {
             actiuni: 'Edit/Delete',
         },
     ]
-    const handleAddRow = () => {
-        // Logic to add a new row
-    }
+
     return (
         <div>
             <div>
@@ -178,11 +189,17 @@ const Clienti = () => {
                     actionButton={
                         <Button
                             style={{ background: '#0188cc', color: 'white' }}
-                            onClick={handleAddRow}
+                            onClick={handleOpenModal}
                         >
                             Adauga clienti
                         </Button>
                     }
+                />
+            </div>
+            <div>
+                <ModalAddClienti
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
                 />
             </div>
         </div>

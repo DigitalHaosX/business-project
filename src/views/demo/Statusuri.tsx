@@ -1,13 +1,26 @@
 import { Button } from '@/components/ui'
+import { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
+import ModalAddStatus from './ModalAddStatus'
 
 const Statusuri = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const handleEdit = () => {
-        console.log('click')
+        console.log('Edit')
     }
+
     const handleDelete = () => {
-        console.log('click')
+        console.log('Delete')
+    }
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
     }
     const columns = [
         {
@@ -144,9 +157,7 @@ const Statusuri = () => {
 
         // more data...
     ]
-    const handleAddRow = () => {
-        console.log('click')
-    }
+
     return (
         <div>
             <div>
@@ -166,12 +177,18 @@ const Statusuri = () => {
                     data={data}
                     actionButton={
                         <Button
-                            onClick={handleAddRow}
                             style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleOpenModal}
                         >
                             Adauga status
                         </Button>
                     }
+                />
+            </div>
+            <div>
+                <ModalAddStatus
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
                 />
             </div>
         </div>

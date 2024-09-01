@@ -1,14 +1,26 @@
 import { Button } from '@/components/ui'
-import React from 'react'
+import React, { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
+import ModalSarcini from './ModalSarcini'
 
 const InformatiiSarcini = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const handleEdit = () => {
         console.log('Edit')
     }
+
     const handleDelete = () => {
         console.log('Delete')
+    }
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
     }
 
     const columns = [
@@ -176,9 +188,6 @@ const InformatiiSarcini = () => {
             actiuni: 'Edit/Delete',
         },
     ]
-    const handleAddRow = () => {
-        console.log('click')
-    }
     return (
         <div>
             <div
@@ -195,12 +204,15 @@ const InformatiiSarcini = () => {
                     actionButton={
                         <Button
                             style={{ background: '#0188cc', color: 'white' }}
-                            onClick={handleAddRow}
+                            onClick={handleOpenModal}
                         >
                             Adauga sarcina
                         </Button>
                     }
                 />
+            </div>
+            <div>
+                <ModalSarcini isOpen={isModalOpen} onClose={handleCloseModal} />
             </div>
         </div>
     )

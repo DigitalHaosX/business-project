@@ -1,11 +1,5 @@
-import React from 'react'
 import CustomTable from './CustomTable'
-import {
-    HiDocumentRemove,
-    HiDotsVertical,
-    HiPencil,
-    HiTrash,
-} from 'react-icons/hi'
+import { HiPencil, HiTrash } from 'react-icons/hi'
 import { Button } from '@/components/ui'
 
 const TipProiecte = () => {

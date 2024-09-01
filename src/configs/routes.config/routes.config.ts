@@ -20,9 +20,9 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'proiecteDetails', // Unique key for the route
-        path: '/proiecte/:id', // Dynamic route that captures the 'id' parameter
-        component: lazy(() => import('@/views/demo/ProiecteDetails')), // Component to render for this route
+        key: 'proiecteDetails',
+        path: '/proiecte/:id',
+        component: lazy(() => import('@/views/demo/ProiecteDetails')),
         authority: [],
     },
     {
@@ -51,8 +51,8 @@ export const protectedRoutes = [
     },
     {
         key: 'chat',
-        path: '/chat',
-        component: lazy(() => import('@/views/demo/Chat')),
+        path: '/chat/ChatPage',
+        component: lazy(() => import('@/views/demo/chat/ChatPage')),
         authority: [],
     },
     {

@@ -33,14 +33,14 @@ const InformatiiClienti = () => {
                 <div>
                     <h4>Nume Prenume / Denumire Societate</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Nume Prenume / Denumire Societate"
                     />
                 </div>
                 <div>
                     <h4>VAT</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="VAT"
                     />
                 </div>
@@ -49,14 +49,14 @@ const InformatiiClienti = () => {
                 <div>
                     <h4>Email</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Email"
                     />
                 </div>
                 <div>
                     <h4>Telefon</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Telefon"
                     />
                 </div>

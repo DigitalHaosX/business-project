@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { HEADER_HEIGHT_CLASS } from '@/constants/theme.constant'
 import type { ReactNode } from 'react'
 import type { CommonProps } from '@/@types/common'
+import Notification from './Notification'
 
 interface HeaderProps extends CommonProps {
     headerStart?: ReactNode
@@ -19,7 +20,7 @@ const Header = (props: HeaderProps) => {
                 className={classNames(
                     'header-wrapper',
                     HEADER_HEIGHT_CLASS,
-                    container && 'container mx-auto'
+                    container && 'container mx-auto',
                 )}
             >
                 <div className="header-action header-action-start">
@@ -31,6 +32,7 @@ const Header = (props: HeaderProps) => {
                     </div>
                 )}
                 <div className="header-action header-action-end">
+                    <Notification />
                     {headerEnd}
                 </div>
             </div>

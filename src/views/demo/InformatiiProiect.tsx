@@ -5,18 +5,18 @@ import { HiMinusCircle, HiPlusCircle, HiUserCircle } from 'react-icons/hi'
 const InformatiiProiect = () => {
     return (
         <div>
-            <div className="flex items-center justify-between mt-4 gap-4">
+            <div className="flex items-center justify-between mt-4">
                 <div>
                     <h4>Titlu Proiect</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Titlu proiect"
                     />
                 </div>
                 <div>
                     <h4>Tip Proiect</h4>
                     <Button
-                        className="flex justify-center items-center w-[500px] h-[40px] mt-4 mb-4"
+                        className="flex justify-center items-center w-[650px] h-[40px] mt-4 mb-4"
                         shape="circle"
                     >
                         <Dropdown

@@ -31,21 +31,21 @@ const SetariCont = () => {
                 <div>
                     <h4>Nume Prenume</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Nume Prenume"
                     />
                 </div>
                 <div>
                     <h4>Email</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Email"
                     />
                 </div>
             </div>
             <div className="rounded-full mb-4">
                 <Button
-                    className="flex justify-center items-center w-[500px] h-[40px]"
+                    className="flex justify-center items-center w-[650px] h-[40px]"
                     shape="circle"
                 >
                     <Dropdown
@@ -65,21 +65,21 @@ const SetariCont = () => {
                 <div>
                     <h4>Parola curenta</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4"
                         placeholder="Parola curenta"
                     />
                 </div>
                 <div>
                     <h4>Parola noua</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4"
                         placeholder="Parola noua"
                     />
                 </div>
             </div>
             <div className="flex items-center justify-end">
                 <Button
-                    className="flex justify-center items-center w-[500px] h-[40px]"
+                    className="flex justify-center items-center w-[650px] h-[40px]"
                     shape="circle"
                 >
                     Salveaza

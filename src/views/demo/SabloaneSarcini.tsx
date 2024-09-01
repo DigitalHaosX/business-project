@@ -18,7 +18,7 @@ const SabloaneSarcini = () => {
                     Sablon nou +
                 </Button>
             </div>
-            <div className="flex flex-row justify-start gap-4 ">
+            <div className="flex flex-row justify-between gap-4 ">
                 <Card
                     header={
                         <div className="flex justify-between items-center">

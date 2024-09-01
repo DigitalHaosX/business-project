@@ -1,14 +1,26 @@
-import React from 'react'
-import { Card } from '@/components/ui'
+import React, { useState } from 'react'
+import { Button, Card } from '@/components/ui'
 import CustomTable from './CustomTable'
 import { HiPencil, HiTrash } from 'react-icons/hi'
+import ModalSarcini from './ModalSarcini'
 
 const Sarcini = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const handleEdit = () => {
         console.log('Edit')
     }
+
     const handleDelete = () => {
         console.log('Delete')
+    }
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
     }
     const columns = [
         {
@@ -242,7 +254,21 @@ const Sarcini = () => {
                     padding: '16px',
                 }}
             >
-                <CustomTable columns={columns} data={data} />
+                <CustomTable
+                    columns={columns}
+                    data={data}
+                    actionButton={
+                        <Button
+                            style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleOpenModal}
+                        >
+                            Adauga sarcini
+                        </Button>
+                    }
+                />
+            </div>
+            <div>
+                <ModalSarcini isOpen={isModalOpen} onClose={handleCloseModal} />
             </div>
         </div>
     )

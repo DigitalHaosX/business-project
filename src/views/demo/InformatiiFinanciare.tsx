@@ -8,7 +8,7 @@ const InformatiiFinanciare = () => {
                 <div>
                     <h4>Cost Materiale</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Introduceti costul total..."
                     />
                 </div>
@@ -16,7 +16,7 @@ const InformatiiFinanciare = () => {
                     <h4>Metoda de plata</h4>
 
                     <Button
-                        className="flex justify-center items-center w-[500px] h-[40px] mt-4 mb-4"
+                        className="flex justify-center items-center w-[650px] h-[40px] mt-4 mb-4"
                         shape="circle"
                     >
                         <Dropdown
@@ -33,10 +33,10 @@ const InformatiiFinanciare = () => {
                 </div>
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
-                <div className="relative w-[500px] mb-4 mt-4">
+                <div className="relative w-[650px] mb-4 mt-4">
                     <h4>Cost Manopera</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Introduceti costul total..."
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 mt-4">
@@ -47,26 +47,26 @@ const InformatiiFinanciare = () => {
                 <div>
                     <h4>Data platii</h4>
                     <DatePicker /* No rounded support */
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Alege data"
                     />
                 </div>
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
-                <div className="relative w-[500px] mt-4">
+                <div className="relative w-[650px] mt-4">
                     <h4>Discount</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Discount..."
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 mt-4">
                         RON/%
                     </span>
                 </div>
-                <div className="relative w-[500px] mt-4">
+                <div className="relative mt-4">
                     <h4>TVA</h4>
                     <Input
-                        className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
+                        className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="TVA..."
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 mt-4">

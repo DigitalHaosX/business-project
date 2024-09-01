@@ -8,11 +8,20 @@ import InformatiiFinanciare from './InformatiiFinanciare'
 import InformatiiDocumente from './InformatiiDocumente'
 import InformatiiSarcini from './InformatiiSarcini'
 import InformatiiPiese from './InformatiiPiese'
+import { useState } from 'react'
 
 const { TabNav, TabList, TabContent } = Tabs
 
 const ProiectDetails = () => {
     const { id } = useParams<{ id: string }>()
+
+    // Initialize state to track the current step
+    const [currentStep, setCurrentStep] = useState(1)
+
+    // Handler to update the current step when a card is clicked
+    const handleCardClick = (step: number) => {
+        setCurrentStep(step)
+    }
 
     return (
         <div className="text-xl font-semibold">
@@ -20,7 +29,7 @@ const ProiectDetails = () => {
 
             {/* Add your logic here to fetch and display project details based on the ID */}
             <div className="mb-4">
-                <Steps>
+                <Steps current={currentStep}>
                     <Steps.Item />
                     <Steps.Item />
                     <Steps.Item />
@@ -34,7 +43,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[200px] h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(1)}
                 >
                     <h5 className="text-xl font-bold">Pasul 1</h5>
                     <p className="mt-4 text-xl font-bold">
@@ -44,7 +53,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[200px] h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(2)}
                 >
                     <h5 className="text-xl font-bold">Pasul 2</h5>
                     <p className="mt-4 text-xl font-bold">Diagnostic</p>
@@ -52,7 +61,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[200px]  h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(3)}
                 >
                     <h5 className="text-xl font-bold">Pasul 3</h5>
                     <p className="mt-4 text-xl font-bold">Creare deviz</p>
@@ -60,7 +69,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[200px]  h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(4)}
                 >
                     <h5 className="text-xl font-bold">Pasul 4</h5>
                     <p className="mt-4 text-xl font-bold">Aprobare lucrare</p>
@@ -68,7 +77,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[200px]  h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(5)}
                 >
                     <h5 className="text-xl font-bold">Pasul 5</h5>
                     <p className="mt-4 text-xl font-bold">Comandare piese</p>
@@ -76,7 +85,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[200px]  h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(6)}
                 >
                     <h5 className="text-xl font-bold">Pasul 6</h5>
                     <p className="mt-4 text-xl font-bold">
@@ -86,7 +95,7 @@ const ProiectDetails = () => {
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[200px]  h-[150px]"
-                    onClick={(e) => console.log('Card Clickable', e)}
+                    onClick={() => handleCardClick(7)}
                 >
                     <h5 className="text-xl font-bold">Pasul 7</h5>
                     <p className="mt-4 text-xl font-bold">

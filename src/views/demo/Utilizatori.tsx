@@ -1,13 +1,26 @@
 import { Button } from '@/components/ui'
+import { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
+import ModalAddUser from './ModalAddUser'
 
 const Utilizatori = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const handleEdit = () => {
-        console.log('click')
+        console.log('Edit')
     }
+
     const handleDelete = () => {
-        console.log('click')
+        console.log('Delete')
+    }
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
     }
     const columns = [
         {
@@ -32,14 +45,14 @@ const Utilizatori = () => {
             cell: () => (
                 <div className="flex space-x-2">
                     <button
-                        onClick={() => handleEdit()}
                         className="text-blue-500 hover:text-blue-700"
+                        onClick={() => handleEdit()}
                     >
                         <HiPencil />
                     </button>
                     <button
-                        onClick={() => handleDelete()}
                         className="text-red-500 hover:text-red-700"
+                        onClick={() => handleDelete()}
                     >
                         <HiTrash />
                     </button>
@@ -121,9 +134,7 @@ const Utilizatori = () => {
         },
         // more data...
     ]
-    const handleAddRow = () => {
-        console.log('click')
-    }
+
     return (
         <div>
             <div>
@@ -143,13 +154,16 @@ const Utilizatori = () => {
                     data={data}
                     actionButton={
                         <Button
-                            onClick={handleAddRow}
                             style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleOpenModal}
                         >
                             Adauga utilizator
                         </Button>
                     }
                 />
+            </div>
+            <div>
+                <ModalAddUser isOpen={isModalOpen} onClose={handleCloseModal} />
             </div>
         </div>
     )

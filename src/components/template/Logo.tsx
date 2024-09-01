@@ -7,6 +7,9 @@ interface LogoProps extends CommonProps {
     mode?: 'light' | 'dark'
     imgClass?: string
     logoWidth?: number | string
+    marginTop?: number | string
+    marginLeft?: number | string
+    padding?: number | string
 }
 
 const LOGO_SRC_PATH = '/img/logo/'
@@ -19,6 +22,9 @@ const Logo = (props: LogoProps) => {
         imgClass,
         style,
         logoWidth = 'auto',
+        marginTop = 8,
+        marginLeft = 8,
+        padding = 6,
     } = props
 
     return (
@@ -26,7 +32,7 @@ const Logo = (props: LogoProps) => {
             className={classNames('logo', className)}
             style={{
                 ...style,
-                ...{ width: logoWidth },
+                ...{ width: logoWidth, marginTop, marginLeft, padding },
             }}
         >
             <img
