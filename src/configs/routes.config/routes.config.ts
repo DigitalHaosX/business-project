@@ -38,6 +38,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'constatari',
+        path: '/constatari',
+        component: lazy(() => import('@/views/demo/Constatari')),
+        authority: [],
+    },
+    {
         key: 'piese',
         path: '/piese',
         component: lazy(() => import('@/views/demo/Piese')),

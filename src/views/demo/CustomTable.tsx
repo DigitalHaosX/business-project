@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react'
-import Table from '@/components/ui/Table'
-import Pagination from '@/components/ui/Pagination'
-import Select from '@/components/ui/Select'
-import Input from '@/components/ui/Input'
-import Checkbox from '@/components/ui/Checkbox'
+import Table from '../../components/ui/Table'
+import Pagination from '../../components/ui/Pagination'
+import Select from '../../components/ui/Select'
+import Input from '../../components/ui/Input'
+import Checkbox from '../../components/ui/Checkbox'
 import {
     useReactTable,
     getCoreRowModel,

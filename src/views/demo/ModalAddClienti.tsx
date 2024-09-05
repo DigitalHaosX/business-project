@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, Dropdown, Input } from '@/components/ui'
+import React, { ChangeEvent } from 'react'
+import { Button, Checkbox, Input, Radio } from '@/components/ui'
 import ReactModal from 'react-modal'
 import { HiUserCircle } from 'react-icons/hi'
 
@@ -12,6 +12,10 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
     isOpen,
     onClose,
 }) => {
+    const onCheck = (value: boolean, e: ChangeEvent<HTMLInputElement>) => {
+        console.log(value, e)
+    }
+
     return (
         <ReactModal
             style={{
@@ -51,7 +55,6 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         <div className="w-24 h-24 bg-gray-300 rounded-full mb-4 flex items-center justify-center">
                             <HiUserCircle className="text-7xl text-gray-500" />
                         </div>
-
                         <h3 className="text-xl font-semibold">Account Info</h3>
                         <p className="text-gray-600">
                             Add here the user account info.
@@ -60,75 +63,126 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                 </div>
 
                 {/* Main Form */}
-                <div className="w-2/3 p-8">
+                <div
+                    className="w-2/3 p-8 overflow-y-auto"
+                    style={{ maxHeight: '80vh' }}
+                >
                     <form>
-                        <div className="grid grid-cols-1 gap-4 mb-6">
-                            <div>
-                                <label className="block text-gray-700">
-                                    Email
-                                </label>
-                                <Input
-                                    readOnly
-                                    className="w-full"
-                                    defaultValue="developer@core-software.ro"
-                                />
+                        <div className="mb-4">
+                            <h4>Tip:</h4>
+                            <div className="flex items-center gap-4 mt-2">
+                                <Radio name="simpleRadioExample">
+                                    Persoana fizica
+                                </Radio>
+                                <Radio defaultChecked name="simpleRadioExample">
+                                    Persoana juridica
+                                </Radio>
                             </div>
-                            <div>
-                                <label className="block text-gray-700">
-                                    First Name
-                                </label>
-                                <Input
-                                    className="w-full"
-                                    placeholder="First Name"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700">
-                                    Last Name
-                                </label>
-                                <Input
-                                    className="w-full"
-                                    placeholder="Last Name"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700">
-                                    Password
-                                </label>
-                                <Input
-                                    className="w-full"
-                                    type="password"
-                                    defaultValue="********"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700">
-                                    Password Confirm
-                                </label>
-                                <Input
-                                    className="w-full"
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700">
-                                    Manage Role
-                                </label>
-                                <Button className="flex items-center rounded mb-4 w-full ">
-                                    <Dropdown title="Select Role">
-                                        <Dropdown.Item eventKey="a">
-                                            Admin
-                                        </Dropdown.Item>
-                                        <Dropdown.Item eventKey="b">
-                                            User
-                                        </Dropdown.Item>
-                                        <Dropdown.Item eventKey="c">
-                                            Manager
-                                        </Dropdown.Item>
-                                    </Dropdown>
-                                </Button>
-                            </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Nume Prenume / Denumire Societate</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Nume Prenume / Denumire Societate"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>VAT</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="VAT"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Email</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Email"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Telefon</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Telefon"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="mb-2">Adresa de facturare</h4>
+                            <Input
+                                textArea
+                                className="rounded-xl"
+                                placeholder="Adresa de facturare..."
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Oras</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Oras"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Judet</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Judet"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Cod Postal</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Cod Postal"
+                            />
+                        </div>
+
+                        <div className="flex items-center mt-4">
+                            <Checkbox defaultChecked onChange={onCheck} />
+                            <h4 className="ml-2">
+                                Aceeasi adresa pentru livrare
+                            </h4>
+                        </div>
+
+                        <div className="mt-4">
+                            <h4 className="mb-2">Adresa de livrare</h4>
+                            <Input
+                                textArea
+                                className="rounded-xl"
+                                placeholder="Adresa de livrare..."
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Oras</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Oras"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Judet</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Judet"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4>Cod Postal</h4>
+                            <Input
+                                className="w-full h-[40px] rounded-full mt-2"
+                                placeholder="Cod Postal"
+                            />
                         </div>
 
                         <div className="flex justify-end space-x-4">

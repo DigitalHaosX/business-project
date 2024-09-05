@@ -1,8 +1,48 @@
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Progress from '@/components/ui/Progress'
+import axios from 'axios'
 
 const Home = () => {
+    const getUserById = async (id) => {
+        try {
+            const response = await axios.get(`/api/users/${id}`)
+            console.log('User Data:', response.data)
+            return response.data
+        } catch (error) {
+            console.error('Error fetching user:', error)
+        }
+    }
+
+    getUserById(2)
+
+    const updateUser = async (userId, userData) => {
+        try {
+            const response = await axios.put(`/api/users/${userId}`, userData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            console.log('User updated:', response.data)
+            return response.data
+        } catch (error) {
+            console.error('Error updating user:', error)
+            throw error
+        }
+    }
+
+    // Example usage
+    const userId = 2 // Replace with the actual user ID
+    const userData = {
+        username: 'newUsername',
+        firstName: 'John',
+        lastName: 'Doe',
+        password: 'newPassword123',
+        role: 'SUPER_ADMIN', // Replace with the desired role
+    }
+
+    updateUser(userId, userData)
+
     return (
         <div>
             <div>

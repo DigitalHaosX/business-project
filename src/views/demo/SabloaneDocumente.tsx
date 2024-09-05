@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card } from '@/components/ui'
 import CustomDropdown from './CustomDropdown'
 import Button from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import ModalSabloaneDocumente from './SabloaneDocumenteModal'
 
 const SabloaneDocumente = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+    }
     const dropdownItems = [
         { eventKey: 'a', label: 'Descarca' },
         { eventKey: 'b', label: 'Incarca document nou' },
@@ -16,7 +26,11 @@ const SabloaneDocumente = () => {
                 <h3 className="text-3xl font-semibold mb-4">Documente</h3>
             </div>
             <div className="flex items-center justify-between">
-                <Button className="mb-4" shape="circle">
+                <Button
+                    className="mb-4"
+                    shape="circle"
+                    onClick={handleOpenModal}
+                >
                     Sablon nou +
                 </Button>
                 <div className="flex items-center ml-auto gap-4">
@@ -115,6 +129,12 @@ const SabloaneDocumente = () => {
                         Creat la data de: 15 Iul 2024
                     </p>
                 </Card>
+            </div>
+            <div>
+                <ModalSabloaneDocumente
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                />
             </div>
         </div>
     )

@@ -1,11 +1,15 @@
 import { useNavigate } from 'react-router-dom'
-import { Button, Card } from '@/components/ui'
+import { Button, Card } from '../../components/ui'
 import CustomTable from './CustomTable'
 import { ColumnDef } from '@tanstack/react-table'
 import { HiPencil, HiTrash } from 'react-icons/hi'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { fetchProjectStatistics } from './ProiecteService'
 
 interface Proiect {
     id: string
+    name: string
     cheie: string
     categorie: string
     status: string
@@ -14,6 +18,8 @@ interface Proiect {
 
 const Proiecte = () => {
     const navigate = useNavigate()
+    const [data, setData] = useState<Proiect[]>([])
+    const [totalProjects, setTotalProjects] = useState<number | null>(null)
 
     const handleIdClick = (id: string) => {
         navigate(`/proiecte/${id}`)
@@ -26,22 +32,101 @@ const Proiecte = () => {
         console.log('click')
     }
 
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:8080/api/projects',
+                {
+                    headers: {
+                        accept: 'application/json',
+                        Authorization:
+                            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU1MzYxOTMsImV4cCI6MTcyNTYyMjU5M30.UpppikotyHefbAzq8bKE1omxNuOiAnf7n-ksD3Q9X5ISZDzwGfxwicD0L9wYTPTjI34NwQ7vS1o84bqUycIDkg',
+                    },
+                },
+            )
+
+            const projects = response.data
+            console.log('API Response:', projects)
+
+            // Map through the array of projects to extract relevant data
+            const formattedData = projects.map((project: any) => ({
+                id: project.id.toString(),
+                name: project.name,
+                status: project.status,
+            }))
+            setData(formattedData)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const fetchTotalProjects = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:8080/api/projects/statistics',
+                {
+                    headers: {
+                        accept: 'application/json',
+                        Authorization:
+                            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU1MzYxOTMsImV4cCI6MTcyNTYyMjU5M30.UpppikotyHefbAzq8bKE1omxNuOiAnf7n-ksD3Q9X5ISZDzwGfxwicD0L9wYTPTjI34NwQ7vS1o84bqUycIDkg',
+                    },
+                },
+            )
+
+            // Log the full response to verify it's coming through
+            console.log('API Statistics Response:', response.data)
+
+            // Extract the total from the response and update the state
+            const totalProjects = response.data.total
+
+            // Check if totalProjects is being set correctly
+            console.log('Total Projects:', totalProjects)
+
+            // Update the state with the total number of projects
+            setTotalProjects(totalProjects)
+        } catch (error) {
+            console.error('Error fetching total projects:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchTotalProjects()
+    }, [])
+
+    /* const fetchTotalProjects = async () => {
+        try {
+            const response = await fetchProjectStatistics()
+            console.log('Total Projects:', response.data.total) // Log the response data
+            setTotalProjects(response.data.total)
+        } catch (error) {
+            console.error('Error fetching total projects:', error) // Log the error
+        }
+    }
+
+    useEffect(() => {
+        fetchTotalProjects()
+    }, []) */
+
     const columns: ColumnDef<Proiect>[] = [
         {
             header: 'ID',
             accessorKey: 'id',
             cell: ({ row }) => (
                 <span
-                    onClick={() => handleIdClick(row.original.id)}
                     className="text-blue-500 cursor-pointer hover:underline"
+                    onClick={() => handleIdClick(row.original.id)}
                 >
                     {row.original.id}
                 </span>
             ),
         },
         {
-            header: 'Cheie',
-            accessorKey: 'cheie',
+            header: 'Nume Proiect',
+            accessorKey: 'name',
         },
         {
             header: 'Categorie',
@@ -52,19 +137,23 @@ const Proiecte = () => {
             accessorKey: 'status',
         },
         {
+            header: 'Operator',
+            accessorKey: 'operator',
+        },
+        {
             header: 'Actiuni',
             accessorKey: 'actiuni',
             cell: () => (
                 <div className="flex space-x-2">
                     <button
-                        onClick={() => handleEdit()}
                         className="text-blue-500 hover:text-blue-700"
+                        onClick={() => handleEdit()}
                     >
                         <HiPencil />
                     </button>
                     <button
-                        onClick={() => handleDelete()}
                         className="text-red-500 hover:text-red-700"
+                        onClick={() => handleDelete()}
                     >
                         <HiTrash />
                     </button>
@@ -73,7 +162,7 @@ const Proiecte = () => {
         },
     ]
 
-    const data: Proiect[] = [
+    /*    const data: Proiect[] = [
         {
             id: '11',
             cheie: 'fsdF7686FSD',
@@ -145,7 +234,7 @@ const Proiecte = () => {
             actiuni: 'edit/delete',
         },
         // more data...
-    ]
+    ] */
 
     const handleAddRow = () => {
         console.log('click')
@@ -156,6 +245,23 @@ const Proiecte = () => {
             <div>
                 <h3 className="text-xl font-semibold mb-4">Proiecte</h3>
             </div>
+            {/*   <div>
+                <h4 className="text-lg font-semibold">Lista Proiecte:</h4>
+                <ul>
+                    {data.length > 0 ? (
+                        data.map((project) => (
+                            <li key={project.id} className="mb-2">
+                                <strong>ID:</strong> {project.id} <br />
+                                <strong>Nume Proiect:</strong> {project.name}{' '}
+                                <br />
+                                <strong>Status:</strong> {project.status}
+                            </li>
+                        ))
+                    ) : (
+                        <li>Nicio proiect nu a fost gasit.</li>
+                    )}
+                </ul>
+            </div> */}
             <div className="flex flex-row justify-between">
                 <Card
                     clickable
@@ -163,7 +269,9 @@ const Proiecte = () => {
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">Proiecte</h5>
-                    <p className="mt-4 text-4xl font-bold">45</p>
+                    <p className="mt-4 text-4xl font-bold">
+                        {totalProjects !== null ? totalProjects : 'N/A'}
+                    </p>
                 </Card>
                 <Card
                     clickable
@@ -205,8 +313,8 @@ const Proiecte = () => {
                     data={data}
                     actionButton={
                         <Button
-                            onClick={handleAddRow}
                             style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleAddRow}
                         >
                             Adauga proiect
                         </Button>

@@ -50,6 +50,16 @@ const navigationConfig: NavigationTree[] = [
         subMenu: [],
     },
     {
+        key: 'constatari',
+        path: '/constatari',
+        title: 'Constatari',
+        translateKey: 'nav.constatari',
+        icon: 'singleMenu',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
+    {
         key: 'piese',
         path: '/piese',
         title: 'Piese',
