@@ -1,6 +1,4 @@
-// src/services/ProjectService.ts
-
-import ApiService from '../../services/ApiService'
+/* import ApiService from '../../services/ApiService'
 import { AxiosRequestConfig } from 'axios'
 
 type ProjectStatisticsResponse = {
@@ -39,3 +37,4 @@ export async function fetchProjectStatistics() {
         throw error // Re-throw the error to handle it in the component
     }
 }
+ */
