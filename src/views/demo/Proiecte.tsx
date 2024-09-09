@@ -1,10 +1,19 @@
 import { useNavigate } from 'react-router-dom'
-import { Button, Card } from '../../components/ui'
+import { Card } from '../../components/ui'
 import CustomTable from './CustomTable'
 import { ColumnDef } from '@tanstack/react-table'
 import { HiPencil, HiTrash } from 'react-icons/hi'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import ModalDelete from './ModalDelete'
+
+// Importing service functions
+import {
+    fetchProjects,
+    fetchTotalProjects,
+    fetchNewProjects,
+    fetchProgressProjects,
+    fetchFinishedProjects,
+} from './projectService'
 
 interface Proiect {
     id: string
@@ -23,162 +32,81 @@ const Proiecte = () => {
     const [progressProjects, setProgressProjects] = useState<number | null>(
         null,
     )
+    const [finishedProjects, setFinishedProjects] = useState<number | null>(
+        null,
+    )
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
 
     const handleIdClick = (id: string) => {
         navigate(`/proiecte/${id}`)
     }
 
     const handleEdit = () => {
-        console.log('click')
-    }
-    const handleDelete = () => {
-        console.log('click')
+        console.log('Edit')
     }
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/api/projects',
-                {
-                    headers: {
-                        accept: 'application/json',
-                        Authorization:
-                            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU2MjI2NjksImV4cCI6MTcyNTcwOTA2OX0.8CgO01LcJbIvCG8wYJ6VoQd80YDWWTfxYi4c6DLvaGU6opQ41tGM5lYN5lsz-szavoutewelOwqgmv0NCqgu5g',
-                    },
-                },
-            )
-
-            // Log the API response to see its structure
-            console.log('API Response:', response.data)
-
-            // Extract the project data from the "content" field
-            const projects = response.data.content // Extracting the array from "content"
-
-            // Check if projects is an array
-            if (Array.isArray(projects)) {
-                // Map through the array of projects and extract relevant data
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const projects = await fetchProjects()
                 const formattedData = projects.map((project: any) => ({
                     id: project.id.toString(),
                     name: project.name,
-                    categorie: project.description || 'N/A', // Adjust as per your data
+                    categorie: project.description || 'N/A',
                     status: project.status,
-                    /*  operator: project.operator || 'Unknown', // Adjust as per your data
-                    actiuni: '', // Placeholder for actions */
                 }))
-
-                console.log('Formatted Data:', formattedData) // Log the formatted data
-
-                // Update the state with the formatted project data
                 setData(formattedData)
-            } else {
-                console.error('Expected an array, but got:', projects)
+            } catch (error) {
+                console.error('Error fetching data:', error)
             }
-        } catch (error) {
-            console.error('Error fetching data:', error)
         }
-    }
-    useEffect(() => {
+
         fetchData()
     }, [])
 
-    const fetchTotalProjects = async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/api/projects/statistics',
-                {
-                    headers: {
-                        accept: 'application/json',
-                        Authorization:
-                            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU2MjI2NjksImV4cCI6MTcyNTcwOTA2OX0.8CgO01LcJbIvCG8wYJ6VoQd80YDWWTfxYi4c6DLvaGU6opQ41tGM5lYN5lsz-szavoutewelOwqgmv0NCqgu5g',
-                    },
-                },
-            )
+    useEffect(() => {
+        const fetchStatistics = async () => {
+            try {
+                const total = await fetchTotalProjects()
+                setTotalProjects(total)
 
-            // Log the full response to verify it's coming through
-            console.log('API Statistics Response:', response.data)
+                const newProjects = await fetchNewProjects()
+                setNewProjects(newProjects)
 
-            // Extract the total from the response and update the state
-            const totalProjects = response.data.total
+                const progress = await fetchProgressProjects()
+                setProgressProjects(progress)
 
-            // Check if totalProjects is being set correctly
-            console.log('Total Projects:', totalProjects)
+                const finished = await fetchFinishedProjects()
+                setFinishedProjects(finished)
+            } catch (error) {
+                console.error('Error fetching statistics:', error)
+            }
+        }
 
-            // Update the state with the total number of projects
-            setTotalProjects(totalProjects)
-        } catch (error) {
-            console.error('Error fetching total projects:', error)
+        fetchStatistics()
+    }, [])
+
+    const handleDeleteClick = (id: string) => {
+        setDeleteItemId(id)
+        setIsDeleteModalOpen(true)
+    }
+
+    const handleConfirmDelete = () => {
+        if (deleteItemId) {
+            handleDelete(deleteItemId)
+            setIsDeleteModalOpen(false)
         }
     }
 
-    useEffect(() => {
-        fetchTotalProjects()
-    }, [])
-
-    const fetchNewProjects = async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/api/projects/statistics',
-                {
-                    headers: {
-                        accept: 'application/json',
-                        Authorization:
-                            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU2MjI2NjksImV4cCI6MTcyNTcwOTA2OX0.8CgO01LcJbIvCG8wYJ6VoQd80YDWWTfxYi4c6DLvaGU6opQ41tGM5lYN5lsz-szavoutewelOwqgmv0NCqgu5g',
-                    },
-                },
-            )
-
-            // Log the full response to verify it's coming through
-            console.log('API Statistics Response:', response.data)
-
-            // Extract the total from the response and update the state
-            const newProjects = response.data.newProjects
-
-            // Check if totalProjects is being set correctly
-            console.log('New Projects:', newProjects)
-
-            // Update the state with the total number of projects
-            setNewProjects(newProjects)
-        } catch (error) {
-            console.error('Error fetching new projects:', error)
-        }
+    const handleDelete = (id: string) => {
+        setData((prevData) => prevData.filter((item) => item.id !== id))
     }
 
-    useEffect(() => {
-        fetchNewProjects()
-    }, [])
-
-    const fetchProgressProjects = async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/api/projects/statistics',
-                {
-                    headers: {
-                        accept: 'application/json',
-                        Authorization:
-                            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU2MjI2NjksImV4cCI6MTcyNTcwOTA2OX0.8CgO01LcJbIvCG8wYJ6VoQd80YDWWTfxYi4c6DLvaGU6opQ41tGM5lYN5lsz-szavoutewelOwqgmv0NCqgu5g',
-                    },
-                },
-            )
- 
-            // Log the full response to verify it's coming through
-            console.log('API Statistics Response:', response.data.approved)
-
-            // Extract the total from the response and update the state
-            const progressProjects = response.data.approved
-
-            // Check if totalProjects is being set correctly
-            console.log('Progress Projects:', progressProjects)
-
-            // Update the state with the total number of projects
-            setProgressProjects(progressProjects)
-        } catch (error) {
-            console.error('Error fetching progress projects:', error)
-        }
+    const handleCancelDelete = () => {
+        setIsDeleteModalOpen(false)
+        setDeleteItemId(null)
     }
-
-    useEffect(() => {
-        fetchProgressProjects()
-    }, [])
 
     const columns: ColumnDef<Proiect>[] = [
         {
@@ -212,17 +140,17 @@ const Proiecte = () => {
         {
             header: 'Actiuni',
             accessorKey: 'actiuni',
-            cell: () => (
+            cell: ({ row }) => (
                 <div className="flex space-x-2">
                     <button
                         className="text-blue-500 hover:text-blue-700"
-                        onClick={() => handleEdit()}
+                        onClick={() => handleEdit()} // Open the modal by ID
                     >
                         <HiPencil />
                     </button>
                     <button
                         className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete()}
+                        onClick={() => handleDeleteClick(row.original.id)} // Delete the row by ID
                     >
                         <HiTrash />
                     </button>
@@ -230,10 +158,6 @@ const Proiecte = () => {
             ),
         },
     ]
-
-    const handleAddRow = () => {
-        console.log('click')
-    }
 
     return (
         <div>
@@ -280,7 +204,9 @@ const Proiecte = () => {
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">Proiecte finalizate</h5>
-                    <p className="mt-4 text-4xl font-bold">30</p>
+                    <p className="mt-4 text-4xl font-bold">
+                        {finishedProjects !== null ? finishedProjects : 'N/A'}
+                    </p>
                 </Card>
             </div>
             <div
@@ -294,14 +220,22 @@ const Proiecte = () => {
                 <CustomTable
                     columns={columns}
                     data={data}
-                    actionButton={
+                    /* actionButton={
                         <Button
                             style={{ background: '#0188cc', color: 'white' }}
                             onClick={handleAddRow}
                         >
                             Adauga proiect
                         </Button>
-                    }
+                    } */
+                />
+            </div>
+            <div>
+                <ModalDelete
+                    isOpen={isDeleteModalOpen}
+                    message="Sigur doriti sa stergeti acest proiect?"
+                    onConfirmDelete={handleConfirmDelete}
+                    onClose={handleCancelDelete}
                 />
             </div>
         </div>

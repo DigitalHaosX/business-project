@@ -1,18 +1,91 @@
-import React, { useState } from 'react'
-import { Button, Card } from '@/components/ui'
+import React, { useEffect, useState } from 'react'
+import { Button, Card } from '../../components/ui'
 import CustomTable from './CustomTable'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import ModalSarcini from './ModalSarcini'
+import {
+    fetchTotalTasks,
+    fetchToDoTasks,
+    fetchInProgress,
+    fetchDone,
+    fetchTasks,
+} from './sarciniService'
+import ModalDelete from './ModalDelete'
 
 const Sarcini = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [totalTasks, setTotalTasks] = useState<number | null>(null)
+    const [toDoTasks, setToDoTasks] = useState<number | null>(null)
+    const [inProgress, setInProgress] = useState<number | null>(null)
+    const [done, setDone] = useState<number | null>(null)
+    const [data, setData] = useState<any[]>([])
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
 
-    const handleEdit = () => {
-        console.log('Edit')
+    useEffect(() => {
+        const fetchAllData = async () => {
+            try {
+                const [tasks, todo, inprogress, done] = await Promise.all([
+                    fetchTotalTasks(),
+                    fetchToDoTasks(),
+                    fetchInProgress(),
+                    fetchDone(),
+                ])
+                setTotalTasks(tasks)
+                setToDoTasks(todo)
+                setInProgress(inprogress)
+                setDone(done)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+
+        fetchAllData()
+    }, [])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const tasks = await fetchTasks()
+                // Format the data if needed to match your table structure
+                const formattedData = tasks.map((task: any) => ({
+                    id: task.id.toString(),
+                    name: task.name,
+                    description: task.description || 'N/A',
+                    status: task.status,
+                    priority: task.priority,
+                }))
+                setData(formattedData)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
+
+    const handleDeleteClick = (id: string) => {
+        setDeleteItemId(id)
+        setIsDeleteModalOpen(true)
     }
 
-    const handleDelete = () => {
-        console.log('Delete')
+    const handleConfirmDelete = () => {
+        if (deleteItemId) {
+            handleDelete(deleteItemId)
+            setIsDeleteModalOpen(false)
+        }
+    }
+
+    const handleDelete = (id: string) => {
+        setData((prevData) => prevData.filter((item) => item.id !== id))
+    }
+
+    const handleCancelDelete = () => {
+        setIsDeleteModalOpen(false)
+        setDeleteItemId(null)
+    }
+    const handleEdit = () => {
+        console.log('Edit')
     }
 
     const handleOpenModal = () => {
@@ -28,21 +101,26 @@ const Sarcini = () => {
             accessorKey: 'id',
         },
         {
-            header: 'Cheie',
-            accessorKey: 'cheie',
+            header: 'Name',
+            accessorKey: 'name',
         },
         {
-            header: 'Categorie',
-            accessorKey: 'categorie',
+            header: 'Description',
+            accessorKey: 'description',
         },
         {
             header: 'Status',
             accessorKey: 'status',
         },
         {
+            header: 'Priority',
+            accessorKey: 'priority',
+        },
+
+        {
             header: 'Actiuni',
             accessorKey: 'actiuni',
-            cell: () => (
+            cell: ({ row }) => (
                 <div className="flex space-x-2">
                     <button
                         className="text-blue-500 hover:text-blue-700"
@@ -52,7 +130,7 @@ const Sarcini = () => {
                     </button>
                     <button
                         className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete()}
+                        onClick={() => handleDeleteClick(row.original.id)}
                     >
                         <HiTrash />
                     </button>
@@ -61,113 +139,6 @@ const Sarcini = () => {
         },
     ]
 
-    const data = [
-        {
-            id: '1',
-            cheie: 'dasd786786dsada',
-            categorie: 'alpha',
-            status: 'Completed',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '2',
-            cheie: 'dasd786786dsadx',
-            categorie: 'beta',
-            status: 'In progress',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '3',
-            cheie: 'dasd786786dsady',
-            categorie: 'gama',
-            status: 'Pending',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '1',
-            cheie: 'dasd786786dsada',
-            categorie: 'alpha',
-            status: 'Completed',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '2',
-            cheie: 'dasd786786dsadx',
-            categorie: 'beta',
-            status: 'In progress',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '3',
-            cheie: 'dasd786786dsady',
-            categorie: 'gama',
-            status: 'Pending',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '1',
-            cheie: 'dasd786786dsada',
-            categorie: 'alpha',
-            status: 'Completed',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '2',
-            cheie: 'dasd786786dsadx',
-            categorie: 'beta',
-            status: 'In progress',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '3',
-            cheie: 'dasd786786dsady',
-            categorie: 'gama',
-            status: 'Pending',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '1',
-            cheie: 'dasd786786dsada',
-            categorie: 'alpha',
-            status: 'Completed',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '2',
-            cheie: 'dasd786786dsadx',
-            categorie: 'beta',
-            status: 'In progress',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '3',
-            cheie: 'dasd786786dsady',
-            categorie: 'gama',
-            status: 'Pending',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '1',
-            cheie: 'dasd786786dsada',
-            categorie: 'alpha',
-            status: 'Completed',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '2',
-            cheie: 'dasd786786dsadx',
-            categorie: 'beta',
-            status: 'In progress',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '3',
-            cheie: 'dasd786786dsady',
-            categorie: 'gama',
-            status: 'Pending',
-            actiuni: 'Edit/Delete',
-        },
-    ]
     return (
         <div>
             <div>
@@ -186,7 +157,9 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">45</p>
+                    <p className=" text-3xl font-bold">
+                        {totalTasks !== null ? totalTasks : 'N/A'}
+                    </p>
                 </Card>
                 <Card
                     header={
@@ -200,7 +173,9 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">10</p>
+                    <p className=" text-3xl font-bold">
+                        {toDoTasks !== null ? toDoTasks : 'N/A'}
+                    </p>
                 </Card>
                 <Card
                     header={
@@ -214,7 +189,9 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">5</p>
+                    <p className=" text-3xl font-bold">
+                        {inProgress !== null ? inProgress : 'N/A'}
+                    </p>
                 </Card>
                 <Card
                     header={
@@ -228,7 +205,9 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">30</p>
+                    <p className=" text-3xl font-bold">
+                        {done !== null ? done : 'N/A'}
+                    </p>
                 </Card>
             </div>
             <div
@@ -269,6 +248,12 @@ const Sarcini = () => {
             </div>
             <div>
                 <ModalSarcini isOpen={isModalOpen} onClose={handleCloseModal} />
+                <ModalDelete
+                    isOpen={isDeleteModalOpen}
+                    message="Sigur doriti sa stergeti aceasta sarcina?"
+                    onConfirmDelete={handleConfirmDelete}
+                    onClose={handleCancelDelete}
+                />
             </div>
         </div>
     )

@@ -39,7 +39,7 @@ export const protectedRoutes = [
     },
     {
         key: 'constatari',
-        path: '/constatari',
+        path: '/constatari/:id?',
         component: lazy(() => import('@/views/demo/Constatari')),
         authority: [],
     },

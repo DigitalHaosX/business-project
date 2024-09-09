@@ -1,9 +1,12 @@
-import { Button } from '@/components/ui'
-import React, { useState } from 'react'
+import { Button } from '../../components/ui'
+import React, { useEffect, useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
 import ModalConstatari from './ModalConstatari'
 import { ColumnDef } from '@tanstack/react-table'
+import { fetchStatements } from './constatariService'
+import { useNavigate, useParams } from 'react-router-dom'
+import ModalDelete from './ModalDelete'
 
 interface Constatare {
     id: string
@@ -16,147 +19,75 @@ interface Constatare {
 }
 
 const Constatari = () => {
+    const navigate = useNavigate()
+    const { id } = useParams<{ id: string }>() // Get the ID from the URL
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [selectedId, setSelectedId] = useState<string | null>(null) // State to store selected ID
-    const [data, setData] = useState<Constatare[]>([
-        {
-            id: '1',
-            nume: 'motor',
-            cost: '500',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '2',
-            nume: 'turbina',
-            cost: '1500',
-            status: 'Complet',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '3',
-            nume: 'injectoare',
-            cost: '2500',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '4',
-            nume: 'transmisie',
-            cost: '3500',
-            status: 'In procesare',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '5',
-            nume: 'evacuare',
-            cost: '500',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '6',
-            nume: 'John',
-            cost: '500',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '8',
-            nume: 'John',
-            cost: '100',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '9',
-            nume: 'John',
-            cost: '300',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '10',
-            nume: 'John',
-            cost: '500',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '11',
-            nume: 'John',
-            cost: '200',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '12',
-            nume: 'John',
-            cost: '350',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '13',
-            nume: 'John',
-            cost: '220',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-        {
-            id: '14',
-            nume: 'John',
-            cost: '800',
-            status: 'Trimis catre receptie',
-            comentarii: 'Ultimul comentariu pentru constatare',
-            operator: 'Xulescu',
-            actiuni: 'Edit/Delete',
-        },
-    ])
+    const [selectedId, setSelectedId] = useState<string | null>(null)
+    const [data, setData] = useState<Constatare[]>([])
     const [selectedComentarii, setSelectedComentarii] = useState<string>('')
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
 
-    const handleEdit = () => {
-        console.log('Edit')
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const tasks = await fetchStatements()
+                // Format the data if needed to match your table structure
+                const formattedData = tasks.map((statement: any) => ({
+                    id: statement.id.toString(),
+                    name: statement.name || 'N/A',
+                    status: statement.status,
+                    description: statement.description || 'N/A',
+                    cost: statement.cost,
+                }))
+                setData(formattedData)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        if (id) {
+            // Check if an ID is present in the URL
+            const selectedConstatare = data.find((item) => item.id === id)
+            setSelectedId(id || null)
+            setSelectedComentarii(selectedConstatare?.comentarii || '')
+            setIsModalOpen(true)
+        }
+    }, [id, data]) // Run the effect when the ID or data changes
+
+    const handleDeleteClick = (id: string) => {
+        setDeleteItemId(id)
+        setIsDeleteModalOpen(true)
     }
 
-    const handleDelete = (id: string) => {
-        setData((prevData) => prevData.filter((item) => item.id !== id))
+    const handleConfirmDelete = () => {
+        if (deleteItemId) {
+            handleDelete(deleteItemId)
+            setIsDeleteModalOpen(false)
+        }
+    }
+
+    const handleCancelDelete = () => {
+        setIsDeleteModalOpen(false)
+        setDeleteItemId(null)
     }
 
     const handleOpenModal = (id: string) => {
-        const selectedConstatare = data.find((item) => item.id === id)
-        setSelectedId(id || null) // Set the selected ID if available
-        setSelectedComentarii(selectedConstatare?.comentarii || '')
-        setIsModalOpen(true) // Open the modal
+        navigate(`/constatari/${id}`) // Update the URL to include the ID
     }
 
     const handleCloseModal = () => {
         setIsModalOpen(false)
-        setSelectedId(null) // Reset the selected ID
+        setSelectedId(null)
+        navigate('/constatari') // Reset the URL when the modal is closed
+    }
+
+    const handleDelete = (id: string) => {
+        setData((prevData) => prevData.filter((item) => item.id !== id))
     }
 
     const handleSaveComentarii = (id: string | null, comentarii: string) => {
@@ -211,13 +142,13 @@ const Constatari = () => {
                 <div className="flex space-x-2">
                     <button
                         className="text-blue-500 hover:text-blue-700"
-                        onClick={() => handleEdit()}
+                        onClick={() => handleOpenModal(row.original.id)} // Open the modal by ID
                     >
                         <HiPencil />
                     </button>
                     <button
                         className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete(row.original.id)} // Delete the row by ID
+                        onClick={() => handleDeleteClick(row.original.id)} // Delete the row by ID
                     >
                         <HiTrash />
                     </button>
@@ -259,6 +190,12 @@ const Constatari = () => {
                     initialComentarii={selectedComentarii} // Pass the initial comments to the modal
                     onSaveComentarii={handleSaveComentarii} // Save the updated comments
                     onClose={handleCloseModal}
+                />
+                <ModalDelete
+                    isOpen={isDeleteModalOpen}
+                    message="Sigur doriti sa stergeti aceasta constatare?"
+                    onConfirmDelete={handleConfirmDelete}
+                    onClose={handleCancelDelete}
                 />
             </div>
         </div>

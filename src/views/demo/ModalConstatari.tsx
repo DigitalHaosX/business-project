@@ -1,4 +1,4 @@
-import { Button, Input } from '@/components/ui'
+import { Button, Input } from '../../components/ui'
 import React, { useState } from 'react'
 import ReactModal from 'react-modal'
 
