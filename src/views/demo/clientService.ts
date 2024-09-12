@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:8080/api/clients'
 const AUTH_HEADER = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
 }
 
 // Fetch all clients
@@ -26,5 +26,32 @@ export const addClient = async (clientData) => {
             error.response ? error.response.data : error.message,
         )
         throw error
+    }
+}
+
+export const updateClient = async (clientId, updatedClient) => {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/clients/${clientId}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization:
+                        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
+                },
+                body: JSON.stringify(updatedClient),
+            },
+        )
+
+        // Check if response is successful
+        if (!response.ok) {
+            throw new Error('Failed to update client')
+        }
+
+        return await response.json() // return response if successful
+    } catch (error) {
+        console.error('Error:', error)
+        throw new Error('Failed to update client')
     }
 }

@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:8080/api/projects'
 const AUTH_HEADER = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
 }
 
 // Fetch all projects
@@ -49,7 +49,7 @@ const API_URL_COMM = 'http://localhost:8080/api/projects'
 const AUTH_HEADER_COMM = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
 }
 
 export const updateProjectDescription = async (
@@ -112,23 +112,6 @@ export const updateProjectType = async (
     }
 }
 
-// projectService.js
-
-/* export const updateProject = async (projectId, updatedData) => {
-    try {
-        const response = await fetch(`/api/projects/${projectId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedData),
-        })
-        return await response.json()
-    } catch (error) {
-        throw new Error('Failed to update project')
-    }
-} */
-
 export const updateProject = async (projectId, updatedData) => {
     try {
         const response = await fetch(
@@ -138,7 +121,7 @@ export const updateProject = async (projectId, updatedData) => {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization:
-                        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
+                        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
                 },
                 body: JSON.stringify(updatedData),
             },
@@ -153,5 +136,29 @@ export const updateProject = async (projectId, updatedData) => {
     } catch (error) {
         console.error('Error:', error)
         throw new Error('Failed to update project')
+    }
+}
+
+export const addProject = async (newProjectData) => {
+    try {
+        const response = await fetch('http://localhost:8080/api/projects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
+            },
+            body: JSON.stringify(newProjectData), // Send new project data in the body
+        })
+
+        // Check if the response is successful
+        if (!response.ok) {
+            throw new Error('Failed to add new project')
+        }
+
+        return await response.json() // return response if successful
+    } catch (error) {
+        console.error('Error:', error)
+        throw new Error('Failed to add new project')
     }
 }

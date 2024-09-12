@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { Card } from '../../components/ui'
+import { Button, Card } from '../../components/ui'
 import CustomTable from './CustomTable'
 import { ColumnDef } from '@tanstack/react-table'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import { useEffect, useState } from 'react'
 import ModalDelete from './ModalDelete'
+import ModalAddProjects from './ModalAddProjects'
 
 // Importing service functions
 import {
@@ -56,6 +57,7 @@ interface User {
 
 const Proiecte = () => {
     const navigate = useNavigate()
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [data, setData] = useState<Proiect[]>([])
     const [users, setUsers] = useState<User[]>([])
     const [totalProjects, setTotalProjects] = useState<number | null>(null)
@@ -146,6 +148,14 @@ const Proiecte = () => {
     const handleCancelDelete = () => {
         setIsDeleteModalOpen(false)
         setDeleteItemId(null)
+    }
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
     }
 
     const getUserName = (userId: number) => {
@@ -269,7 +279,24 @@ const Proiecte = () => {
                     padding: '16px',
                 }}
             >
-                <CustomTable columns={columns} data={data} />
+                <CustomTable
+                    columns={columns}
+                    data={data}
+                    actionButton={
+                        <Button
+                            style={{ background: '#0188cc', color: 'white' }}
+                            onClick={handleOpenModal}
+                        >
+                            Adauga proiecte
+                        </Button>
+                    }
+                />
+            </div>
+            <div>
+                <ModalAddProjects
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                />
             </div>
             <div>
                 <ModalDelete

@@ -1,33 +1,52 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Checkbox, Dropdown, Input } from '../../components/ui'
 import Radio from '../../components/ui/Radio'
-import { fetchClients } from './clientService'
+import { fetchClients, updateClient } from './clientService'
+
+interface Client {
+    id: number
+    createDate: string
+    type: string
+    name: string
+    vat: string
+    email: string
+    phone: string
+    billingAddress: string
+    billingCity: string
+    billingCounty: string
+    billingPostalCode: string
+    shippingAddress: string
+    shippingCity: string
+    shippingCounty: string
+    shippingPostalCode: string
+}
 
 const InformatiiClienti = () => {
-    const [clients, setClients] = useState<{ id: number; name: string }[]>([])
-    const [selectedClient, setSelectedClient] = useState<any>(null)
+    const [clients, setClients] = useState<Client[]>([])
+    const [selectedClientId, setSelectedClientId] = useState<number | null>(
+        null,
+    )
+    const [clientName, setClientName] = useState<string>('')
+    const [clientVat, setClientVat] = useState<string>('')
+    const [clientEmail, setClientEmail] = useState<string>('')
+    const [clientPhone, setClientPhone] = useState<string>('')
+    const [billingAddress, setBillingAddress] = useState<string>('')
+    const [billingCity, setBillingCity] = useState<string>('')
+    const [billingCounty, setBillingCounty] = useState<string>('')
+    const [billingPostalCode, setBillingPostalCode] = useState<string>('')
+    const [shippingAddress, setShippingAddress] = useState<string>('')
+    const [shippingCity, setShippingCity] = useState<string>('')
+    const [shippingCounty, setShippingCounty] = useState<string>('')
+    const [shippingPostalCode, setShippingPostalCode] = useState<string>('')
+    const [clientType, setClientType] = useState<string>('COMPANY')
+    const [sameAddress, setSameAddress] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchClientData = async () => {
             try {
-                const clientData = await fetchClients()
-                setClients(
-                    clientData.map((client: any) => ({
-                        id: client.id,
-                        name: client.name,
-                        vat: client.vat,
-                        email: client.email,
-                        phone: client.phone,
-                        billingAddress: client.billingAddress,
-                        billingCity: client.billingCity,
-                        billingCounty: client.billingCounty,
-                        billingPostalCode: client.billingPostalCode,
-                        shippingAddress: client.shippingAddress,
-                        shippingCity: client.shippingCity,
-                        shippingCounty: client.shippingCounty,
-                        shippingPostalCode: client.shippingPostalCode,
-                    })),
-                )
+                const clientsData = await fetchClients()
+                setClients(clientsData)
+                console.log('Fetched clients:', clientsData)
             } catch (error) {
                 console.error('Error fetching clients:', error)
             }
@@ -36,13 +55,90 @@ const InformatiiClienti = () => {
         fetchClientData()
     }, [])
 
+    useEffect(() => {
+        if (selectedClientId !== null) {
+            const selectedClient = clients.find(
+                (client) => client.id === selectedClientId,
+            )
+            if (selectedClient) {
+                setClientName(selectedClient.name)
+                setClientVat(selectedClient.vat)
+                setClientEmail(selectedClient.email)
+                setClientPhone(selectedClient.phone)
+                setBillingAddress(selectedClient.billingAddress)
+                setBillingCity(selectedClient.billingCity)
+                setBillingCounty(selectedClient.billingCounty)
+                setBillingPostalCode(selectedClient.billingPostalCode)
+                setShippingAddress(selectedClient.shippingAddress)
+                setShippingCity(selectedClient.shippingCity)
+                setShippingCounty(selectedClient.shippingCounty)
+                setShippingPostalCode(selectedClient.shippingPostalCode)
+                setClientType(selectedClient.type)
+            }
+        }
+    }, [selectedClientId, clients])
+
     const handleClientSelect = (clientId: number) => {
-        const client = clients.find((c) => c.id === clientId)
-        setSelectedClient(client || null)
+        setSelectedClientId(clientId)
     }
 
-    const onCheck = (value: boolean, e: ChangeEvent<HTMLInputElement>) => {
-        console.log(value, e)
+    const onCheck = (e: ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked
+        setSameAddress(isChecked)
+        if (isChecked) {
+            setShippingAddress(billingAddress)
+            setShippingCity(billingCity)
+            setShippingCounty(billingCounty)
+            setShippingPostalCode(billingPostalCode)
+        } else {
+            setShippingAddress('')
+            setShippingCity('')
+            setShippingCounty('')
+            setShippingPostalCode('')
+        }
+    }
+
+    const handleSave = async () => {
+        try {
+            if (selectedClientId === null) {
+                throw new Error('No client selected')
+            }
+
+            // Prepare the updated client object
+            const updatedClient = {
+                type: clientType,
+                name: clientName.trim(),
+                vat: clientVat.trim(),
+                email: clientEmail.trim(),
+                phone: clientPhone.trim(),
+                billingAddress: billingAddress.trim(),
+                billingCity: billingCity.trim(),
+                billingCounty: billingCounty.trim(),
+                billingPostalCode: billingPostalCode.trim(),
+                shippingAddress: shippingAddress.trim(),
+                shippingCity: shippingCity.trim(),
+                shippingCounty: shippingCounty.trim(),
+                shippingPostalCode: shippingPostalCode.trim(),
+            }
+
+            // Validate required fields
+            if (
+                !updatedClient.name ||
+                !updatedClient.email ||
+                !updatedClient.phone
+            ) {
+                throw new Error(
+                    'Please fill out all required fields (name, email, phone)',
+                )
+            }
+
+            // Make the API request to update the client
+            await updateClient(selectedClientId, updatedClient)
+            alert('Client updated successfully!')
+        } catch (error) {
+            console.error('Error updating client:', error)
+            alert(`Failed to update client: ${error.message}`)
+        }
     }
 
     return (
@@ -65,10 +161,19 @@ const InformatiiClienti = () => {
             </div>
             <div className="flex flex-row items-center justify-start gap-4 mt-4">
                 <h4>Tip:</h4>
-                <Radio className="mr-4" name="simpleRadioExample">
+                <Radio
+                    className="mr-4"
+                    name="clientType"
+                    checked={clientType === 'INDIVIDUAL'}
+                    onChange={() => setClientType('INDIVIDUAL')}
+                >
                     Persoana fizica
                 </Radio>
-                <Radio defaultChecked name="simpleRadioExample">
+                <Radio
+                    name="clientType"
+                    checked={clientType === 'COMPANY'}
+                    onChange={() => setClientType('COMPANY')}
+                >
                     Persoana juridica
                 </Radio>
             </div>
@@ -78,13 +183,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Nume Prenume / Denumire Societate"
-                        value={selectedClient?.name || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                name: e.target.value,
-                            })
-                        }
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
                     />
                 </div>
                 <div>
@@ -92,13 +192,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="VAT"
-                        value={selectedClient?.vat || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                vat: e.target.value,
-                            })
-                        }
+                        value={clientVat}
+                        onChange={(e) => setClientVat(e.target.value)}
                     />
                 </div>
             </div>
@@ -108,13 +203,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Email"
-                        value={selectedClient?.email || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                email: e.target.value,
-                            })
-                        }
+                        value={clientEmail}
+                        onChange={(e) => setClientEmail(e.target.value)}
                     />
                 </div>
                 <div>
@@ -122,13 +212,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Telefon"
-                        value={selectedClient?.phone || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                phone: e.target.value,
-                            })
-                        }
+                        value={clientPhone}
+                        onChange={(e) => setClientPhone(e.target.value)}
                     />
                 </div>
             </div>
@@ -138,13 +223,8 @@ const InformatiiClienti = () => {
                     textArea
                     className="rounded-xl"
                     placeholder="Adresa de facturare..."
-                    value={selectedClient?.billingAddress || ''}
-                    onChange={(e) =>
-                        setSelectedClient({
-                            ...selectedClient,
-                            billingAddress: e.target.value,
-                        })
-                    }
+                    value={billingAddress}
+                    onChange={(e) => setBillingAddress(e.target.value)}
                 />
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
@@ -153,13 +233,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Oras"
-                        value={selectedClient?.billingCity || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                billingCity: e.target.value,
-                            })
-                        }
+                        value={billingCity}
+                        onChange={(e) => setBillingCity(e.target.value)}
                     />
                 </div>
                 <div>
@@ -167,13 +242,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Judet"
-                        value={selectedClient?.billingCounty || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                billingCounty: e.target.value,
-                            })
-                        }
+                        value={billingCounty}
+                        onChange={(e) => setBillingCounty(e.target.value)}
                     />
                 </div>
                 <div>
@@ -181,18 +251,17 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Cod Postal"
-                        value={selectedClient?.billingPostalCode || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                billingPostalCode: e.target.value,
-                            })
-                        }
+                        value={billingPostalCode}
+                        onChange={(e) => setBillingPostalCode(e.target.value)}
                     />
                 </div>
             </div>
             <div className="flex flex-row items-center justify-start mt-4">
-                <Checkbox defaultChecked onChange={onCheck} />
+                <input
+                    type="checkbox"
+                    checked={sameAddress}
+                    onChange={onCheck}
+                />
                 <h4>Aceeasi adresa pentru livrare</h4>
             </div>
             <div className="mt-4">
@@ -201,13 +270,8 @@ const InformatiiClienti = () => {
                     textArea
                     className="rounded-xl"
                     placeholder="Adresa de livrare..."
-                    value={selectedClient?.shippingAddress || ''}
-                    onChange={(e) =>
-                        setSelectedClient({
-                            ...selectedClient,
-                            shippingAddress: e.target.value,
-                        })
-                    }
+                    value={shippingAddress}
+                    onChange={(e) => setShippingAddress(e.target.value)}
                 />
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
@@ -216,13 +280,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Oras"
-                        value={selectedClient?.shippingCity || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                shippingCity: e.target.value,
-                            })
-                        }
+                        value={shippingCity}
+                        onChange={(e) => setShippingCity(e.target.value)}
                     />
                 </div>
                 <div>
@@ -230,13 +289,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Judet"
-                        value={selectedClient?.shippingCounty || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                shippingCounty: e.target.value,
-                            })
-                        }
+                        value={shippingCounty}
+                        onChange={(e) => setShippingCounty(e.target.value)}
                     />
                 </div>
                 <div>
@@ -244,13 +298,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Cod Postal"
-                        value={selectedClient?.shippingPostalCode || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                shippingPostalCode: e.target.value,
-                            })
-                        }
+                        value={shippingPostalCode}
+                        onChange={(e) => setShippingPostalCode(e.target.value)}
                     />
                 </div>
             </div>
@@ -260,13 +309,8 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Termen de livrare"
-                        value={selectedClient?.deliveryTerm || ''}
-                        onChange={(e) =>
-                            setSelectedClient({
-                                ...selectedClient,
-                                deliveryTerm: e.target.value,
-                            })
-                        }
+                        value={clientType}
+                        onChange={(e) => setClientType(e.target.value)}
                     />
                 </div>
             </div>
@@ -274,6 +318,7 @@ const InformatiiClienti = () => {
                 <Button
                     className="flex justify-center items-center mt-4 w-[300px] h-[40px]"
                     shape="circle"
+                    onClick={handleSave}
                 >
                     Salveaza
                 </Button>

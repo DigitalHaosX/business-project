@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Button, Checkbox, Input, Radio } from '../../components/ui'
+import { Button, Input, Radio } from '../../components/ui'
 import ReactModal from 'react-modal'
 import { HiUserCircle } from 'react-icons/hi'
 import { addClient } from './clientService'
@@ -325,7 +325,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                             />
                         </div>
 
-                        <div className="flex justify-end space-x-4">
+                        <div className="flex justify-between space-x-4">
                             <Button
                                 style={{
                                     background: '#0188cc',

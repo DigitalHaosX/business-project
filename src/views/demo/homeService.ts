@@ -44,7 +44,7 @@ const API_URL_PROJECTS = 'http://localhost:8080/api/projects'
 const AUTH_HEADER_PROJECTS = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
 }
 
 // Fetch total projects statistics
@@ -59,7 +59,7 @@ const API_URL_USERS = 'http://localhost:8080/api/users'
 const AUTH_HEADER_USERS = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
 }
 
 export const fetchUsers = async (): Promise<User[]> => {

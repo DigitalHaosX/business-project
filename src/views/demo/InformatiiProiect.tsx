@@ -56,6 +56,7 @@ const InformatiiProiect = () => {
     const [projectDescription, setProjectDescription] = useState<string>('')
     const [users, setUsers] = useState<User[]>([])
     const [projectType, setProjectType] = useState<string>('')
+    const [projectStatus, setProjectStatus] = useState<string>('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -118,6 +119,7 @@ const InformatiiProiect = () => {
                     setProjectName(matchedProject.name || 'N/A')
                     setProjectDescription(matchedProject.description || '')
                     setProjectType(matchedProject.type)
+                    setProjectStatus(matchedProject.status)
                 }
             } catch (error) {
                 console.error('Error fetching data:', error)
@@ -141,25 +143,6 @@ const InformatiiProiect = () => {
         fetchUserData()
     }, [])
 
-    /*  const handleTypeChange = async (selectedType: string) => {
-        try {
-            const projectId = parseInt(selectedProjectId, 10)
-
-            if (isNaN(projectId)) {
-                throw new Error('Invalid project ID')
-            }
-
-            // Update the state first to reflect the change immediately in the UI
-            setProjectType(selectedType)
-
-            // Then make the API call to update the project type on the server
-            await updateProjectType(projectId, selectedType)
-            console.log('Project type updated successfully')
-        } catch (error) {
-            console.error('Failed to update project type', error)
-        }
-    } */
-
     const handleSave = async () => {
         try {
             const projectId = parseInt(selectedProjectId, 10)
@@ -172,6 +155,7 @@ const InformatiiProiect = () => {
                 name: projectName,
                 type: projectType,
                 description: projectDescription,
+                status: projectStatus,
             }
 
             await updateProject(projectId, updatedProject)
@@ -230,6 +214,44 @@ const InformatiiProiect = () => {
                         </Dropdown>
                     </Button>
                 </div>
+            </div>
+            {/* Project Status Dropdown */}
+            <div className="mt-4">
+                <h4>Status Proiect</h4>
+                <Button
+                    className="flex justify-center items-center w-[650px] h-[40px] mt-4 mb-4"
+                    shape="circle"
+                >
+                    <Dropdown
+                        className="flex items-center justify-center"
+                        title={projectStatus || 'Select Status'}
+                    >
+                        <Dropdown.Item
+                            eventKey="NEW"
+                            onSelect={() => setProjectStatus('NEW')}
+                        >
+                            NEW
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            eventKey="APPROVED"
+                            onSelect={() => setProjectStatus('APPROVED')}
+                        >
+                            APPROVED
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            eventKey="IN PROGRESS"
+                            onSelect={() => setProjectStatus('IN PROGRESS')}
+                        >
+                            IN PROGRESS
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            eventKey="DECLINED"
+                            onSelect={() => setProjectStatus('DECLINED')}
+                        >
+                            DECLINED
+                        </Dropdown.Item>
+                    </Dropdown>
+                </Button>
             </div>
             <div>
                 <h4 className="mb-4">Informatii proiect</h4>
