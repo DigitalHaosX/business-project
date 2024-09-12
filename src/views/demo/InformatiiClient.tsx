@@ -1,8 +1,46 @@
-import React, { ChangeEvent } from 'react'
-import { Button, Checkbox, Dropdown, Input } from '@/components/ui'
-import Radio from '@/components/ui/Radio'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { Button, Checkbox, Dropdown, Input } from '../../components/ui'
+import Radio from '../../components/ui/Radio'
+import { fetchClients } from './clientService'
 
 const InformatiiClienti = () => {
+    const [clients, setClients] = useState<{ id: number; name: string }[]>([])
+    const [selectedClient, setSelectedClient] = useState<any>(null)
+
+    useEffect(() => {
+        const fetchClientData = async () => {
+            try {
+                const clientData = await fetchClients()
+                setClients(
+                    clientData.map((client: any) => ({
+                        id: client.id,
+                        name: client.name,
+                        vat: client.vat,
+                        email: client.email,
+                        phone: client.phone,
+                        billingAddress: client.billingAddress,
+                        billingCity: client.billingCity,
+                        billingCounty: client.billingCounty,
+                        billingPostalCode: client.billingPostalCode,
+                        shippingAddress: client.shippingAddress,
+                        shippingCity: client.shippingCity,
+                        shippingCounty: client.shippingCounty,
+                        shippingPostalCode: client.shippingPostalCode,
+                    })),
+                )
+            } catch (error) {
+                console.error('Error fetching clients:', error)
+            }
+        }
+
+        fetchClientData()
+    }, [])
+
+    const handleClientSelect = (clientId: number) => {
+        const client = clients.find((c) => c.id === clientId)
+        setSelectedClient(client || null)
+    }
+
     const onCheck = (value: boolean, e: ChangeEvent<HTMLInputElement>) => {
         console.log(value, e)
     }
@@ -13,10 +51,15 @@ const InformatiiClienti = () => {
                 <h4>Selecteaza clienti:</h4>
                 <Button className="flex items-center" shape="circle">
                     <Dropdown className="" title="Dropdown Clienti">
-                        <Dropdown.Item eventKey="a">Client 1</Dropdown.Item>
-                        <Dropdown.Item eventKey="b">Client 2</Dropdown.Item>
-                        <Dropdown.Item eventKey="c">Client 3</Dropdown.Item>
-                        <Dropdown.Item eventKey="d">Client 4</Dropdown.Item>
+                        {clients.map((client) => (
+                            <Dropdown.Item
+                                key={client.id}
+                                eventKey={client.id.toString()}
+                                onClick={() => handleClientSelect(client.id)}
+                            >
+                                {client.name}
+                            </Dropdown.Item>
+                        ))}
                     </Dropdown>
                 </Button>
             </div>
@@ -35,6 +78,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Nume Prenume / Denumire Societate"
+                        value={selectedClient?.name || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                name: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div>
@@ -42,6 +92,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="VAT"
+                        value={selectedClient?.vat || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                vat: e.target.value,
+                            })
+                        }
                     />
                 </div>
             </div>
@@ -51,6 +108,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Email"
+                        value={selectedClient?.email || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                email: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div>
@@ -58,6 +122,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Telefon"
+                        value={selectedClient?.phone || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                phone: e.target.value,
+                            })
+                        }
                     />
                 </div>
             </div>
@@ -67,6 +138,13 @@ const InformatiiClienti = () => {
                     textArea
                     className="rounded-xl"
                     placeholder="Adresa de facturare..."
+                    value={selectedClient?.billingAddress || ''}
+                    onChange={(e) =>
+                        setSelectedClient({
+                            ...selectedClient,
+                            billingAddress: e.target.value,
+                        })
+                    }
                 />
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
@@ -75,6 +153,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Oras"
+                        value={selectedClient?.billingCity || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                billingCity: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div>
@@ -82,6 +167,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Judet"
+                        value={selectedClient?.billingCounty || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                billingCounty: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div>
@@ -89,11 +181,18 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Cod Postal"
+                        value={selectedClient?.billingPostalCode || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                billingPostalCode: e.target.value,
+                            })
+                        }
                     />
                 </div>
             </div>
             <div className="flex flex-row items-center justify-start mt-4">
-                <Checkbox defaultChecked onChange={onCheck}></Checkbox>
+                <Checkbox defaultChecked onChange={onCheck} />
                 <h4>Aceeasi adresa pentru livrare</h4>
             </div>
             <div className="mt-4">
@@ -102,6 +201,13 @@ const InformatiiClienti = () => {
                     textArea
                     className="rounded-xl"
                     placeholder="Adresa de livrare..."
+                    value={selectedClient?.shippingAddress || ''}
+                    onChange={(e) =>
+                        setSelectedClient({
+                            ...selectedClient,
+                            shippingAddress: e.target.value,
+                        })
+                    }
                 />
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
@@ -110,6 +216,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Oras"
+                        value={selectedClient?.shippingCity || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                shippingCity: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div>
@@ -117,6 +230,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Judet"
+                        value={selectedClient?.shippingCounty || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                shippingCounty: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div>
@@ -124,6 +244,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[400px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Cod Postal"
+                        value={selectedClient?.shippingPostalCode || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                shippingPostalCode: e.target.value,
+                            })
+                        }
                     />
                 </div>
             </div>
@@ -133,6 +260,13 @@ const InformatiiClienti = () => {
                     <Input
                         className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
                         placeholder="Termen de livrare"
+                        value={selectedClient?.deliveryTerm || ''}
+                        onChange={(e) =>
+                            setSelectedClient({
+                                ...selectedClient,
+                                deliveryTerm: e.target.value,
+                            })
+                        }
                     />
                 </div>
             </div>

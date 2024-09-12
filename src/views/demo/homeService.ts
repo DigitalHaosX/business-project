@@ -4,7 +4,7 @@ const API_BASE_URL = 'http://localhost:8080/api/dashboard/statistics'
 const AUTH_HEADER = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU3OTExMDUsImV4cCI6MTcyNTg3NzUwNX0.6snp_tz2EAB7eKokoj-Xknct7SHV1hLY_2TcGRWaCAyA5RoXNMYbZYZfax5hPn2wfrj4shU1RG8sF4OZjCbC_Q',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
 }
 
 // Fetch total users from the dashboard statistics
@@ -44,7 +44,7 @@ const API_URL_PROJECTS = 'http://localhost:8080/api/projects'
 const AUTH_HEADER_PROJECTS = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU3OTExMDUsImV4cCI6MTcyNTg3NzUwNX0.6snp_tz2EAB7eKokoj-Xknct7SHV1hLY_2TcGRWaCAyA5RoXNMYbZYZfax5hPn2wfrj4shU1RG8sF4OZjCbC_Q',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
 }
 
 // Fetch total projects statistics
@@ -59,7 +59,7 @@ const API_URL_USERS = 'http://localhost:8080/api/users'
 const AUTH_HEADER_USERS = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjU3OTExMDUsImV4cCI6MTcyNTg3NzUwNX0.6snp_tz2EAB7eKokoj-Xknct7SHV1hLY_2TcGRWaCAyA5RoXNMYbZYZfax5hPn2wfrj4shU1RG8sF4OZjCbC_Q',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYwNjE4MDcsImV4cCI6MTcyNjE0ODIwN30.UTPgdtcCGPptLY-LjqJh6XPdkgBOnYXmnm6xzl1-HHvGNK3px-eavb42QGMS1LDvCKQF7iW6Ugor9F_OUxKz8w',
 }
 
 export const fetchUsers = async (): Promise<User[]> => {

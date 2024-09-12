@@ -11,25 +11,23 @@ import {
     fetchUsers,
 } from '../views/demo/homeService'
 
-
 interface User {
-    id: number;
-    username: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    whitePoints: number;
-    blackPoints: number;
+    id: number
+    username: string
+    firstName: string
+    lastName: string
+    role: string
+    whitePoints: number
+    blackPoints: number
 }
-
 
 const Home = () => {
     const [totalUsers, setTotalUsers] = useState<number | null>(null)
     const [totalProjects, setTotalProjects] = useState<number | null>(null)
     const [totalExpenses, setTotalExpenses] = useState<number | null>(null)
     const [totalIncomes, setTotalIncomes] = useState<number | null>(null)
-    const [users, setUsers] = useState<User[]>([]);
-    
+    const [users, setUsers] = useState<User[]>([])
+
     useEffect(() => {
         const fetchAllData = async () => {
             try {
@@ -168,7 +166,9 @@ const Home = () => {
                         key={user.id}
                         clickable
                         className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
-                        onClick={(e) => console.log(`Card Clicked for ${user.username}`, e)}
+                        onClick={(e) =>
+                            console.log(`Card Clicked for ${user.username}`, e)
+                        }
                     >
                         <h5>
                             {user.firstName} {user.lastName} ({user.role})

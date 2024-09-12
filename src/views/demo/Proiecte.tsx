@@ -15,18 +15,49 @@ import {
     fetchFinishedProjects,
 } from './projectService'
 
+import { fetchUsers } from './homeService'
+
 interface Proiect {
+    createDate: string
+    updateDate: string
     id: string
     name: string
+    description: string
+    type: string
+    createdById: number
     status: string
-    cheie: string
-    categorie: string
-    actiuni: string
+    checkpoint: string
+    projectClientId: number
+    taskCount: number
+    completedTaskCount: number
+    materialCost: number
+    laborCost: number
+    discount: number
+    discountType: string
+    paymentType: string
+    paymentDate: string
+    vat: number
+    totalCost: number
+    totalCostDiscounted: number
+    discountCalculated: number
+    vatCalculated: number
+    totalCostWithVat: number
+    discountedLaborCost: number
+}
+interface User {
+    id: number
+    username: string
+    firstName: string
+    lastName: string
+    role: string
+    whitePoints: number
+    blackPoints: number
 }
 
 const Proiecte = () => {
     const navigate = useNavigate()
     const [data, setData] = useState<Proiect[]>([])
+    const [users, setUsers] = useState<User[]>([])
     const [totalProjects, setTotalProjects] = useState<number | null>(null)
     const [newProjects, setNewProjects] = useState<number | null>(null)
     const [progressProjects, setProgressProjects] = useState<number | null>(
@@ -50,19 +81,28 @@ const Proiecte = () => {
         const fetchData = async () => {
             try {
                 const projects = await fetchProjects()
-                const formattedData = projects.map((project: any) => ({
-                    id: project.id.toString(),
-                    name: project.name,
-                    categorie: project.description || 'N/A',
-                    status: project.status,
-                }))
-                setData(formattedData)
+                setData(projects)
+                console.log('Projects', projects)
             } catch (error) {
-                console.error('Error fetching data:', error)
+                console.error('Error fetching projects:', error)
             }
         }
 
         fetchData()
+    }, [])
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const userData: User[] = await fetchUsers() // Ensure fetchUsers returns User[]
+                setUsers(userData)
+                console.log('User data', userData)
+            } catch (error) {
+                console.error('Error fetching user data:', error)
+            }
+        }
+
+        fetchUserData()
     }, [])
 
     useEffect(() => {
@@ -108,6 +148,11 @@ const Proiecte = () => {
         setDeleteItemId(null)
     }
 
+    const getUserName = (userId: number) => {
+        const user = users.find((user) => user.id === userId)
+        return user ? `${user.firstName} ${user.lastName}` : 'Unknown'
+    }
+
     const columns: ColumnDef<Proiect>[] = [
         {
             header: 'ID',
@@ -127,7 +172,11 @@ const Proiecte = () => {
         },
         {
             header: 'Categorie',
-            accessorKey: 'categorie',
+            accessorKey: 'type',
+        },
+        {
+            header: 'Descriere',
+            accessorKey: 'description',
         },
         {
             header: 'Status',
@@ -135,7 +184,10 @@ const Proiecte = () => {
         },
         {
             header: 'Operator',
-            accessorKey: 'operator',
+            accessorKey: 'createdById',
+            cell: ({ row }) => (
+                <span>{getUserName(row.original.createdById)}</span>
+            ),
         },
         {
             header: 'Actiuni',
@@ -217,18 +269,7 @@ const Proiecte = () => {
                     padding: '16px',
                 }}
             >
-                <CustomTable
-                    columns={columns}
-                    data={data}
-                    /* actionButton={
-                        <Button
-                            style={{ background: '#0188cc', color: 'white' }}
-                            onClick={handleAddRow}
-                        >
-                            Adauga proiect
-                        </Button>
-                    } */
-                />
+                <CustomTable columns={columns} data={data} />
             </div>
             <div>
                 <ModalDelete

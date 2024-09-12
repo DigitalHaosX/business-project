@@ -1,7 +1,8 @@
-import React, { ChangeEvent } from 'react'
-import { Button, Checkbox, Input, Radio } from '@/components/ui'
+import React, { ChangeEvent, useState } from 'react'
+import { Button, Checkbox, Input, Radio } from '../../components/ui'
 import ReactModal from 'react-modal'
 import { HiUserCircle } from 'react-icons/hi'
+import { addClient } from './clientService'
 
 interface ModalAddClientiProps {
     isOpen: boolean
@@ -12,8 +13,72 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
     isOpen,
     onClose,
 }) => {
-    const onCheck = (value: boolean, e: ChangeEvent<HTMLInputElement>) => {
+    /* const onCheck = (value: boolean, e: ChangeEvent<HTMLInputElement>) => {
         console.log(value, e)
+    } */
+
+    const [formData, setFormData] = useState({
+        type: 'COMPANY', // default value
+        name: '',
+        vat: '',
+        email: '',
+        phone: '',
+        billingAddress: '',
+        billingCity: '',
+        billingCounty: '',
+        billingPostalCode: '',
+        shippingAddress: '',
+        shippingCity: '',
+        shippingCounty: '',
+        shippingPostalCode: '',
+    })
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked
+        if (isChecked) {
+            setFormData((prev) => ({
+                ...prev,
+                shippingAddress: prev.billingAddress,
+                shippingCity: prev.billingCity,
+                shippingCounty: prev.billingCounty,
+                shippingPostalCode: prev.billingPostalCode,
+            }))
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                shippingAddress: '',
+                shippingCity: '',
+                shippingCounty: '',
+                shippingPostalCode: '',
+            }))
+        }
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        console.log('Submitting data:', formData)
+        try {
+            await addClient(formData)
+            alert('Client added successfully!')
+            onClose() // Close the modal after successful submission
+        } catch (error) {
+            console.error(
+                'Error adding client:',
+                error.response ? error.response.data : error.message,
+            )
+            console.error(
+                'Error adding client:',
+                error.response ? error.response.data : error.message,
+            )
+            alert('Failed to add client.')
+        }
     }
 
     return (
@@ -67,14 +132,24 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                     className="w-2/3 p-8 overflow-y-auto"
                     style={{ maxHeight: '80vh' }}
                 >
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <h4>Tip:</h4>
                             <div className="flex items-center gap-4 mt-2">
-                                <Radio name="simpleRadioExample">
+                                <Radio
+                                    name="type"
+                                    value="PERSON"
+                                    checked={formData.type === 'PERSON'}
+                                    onChange={(e) => handleInputChange(e)}
+                                >
                                     Persoana fizica
                                 </Radio>
-                                <Radio defaultChecked name="simpleRadioExample">
+                                <Radio
+                                    name="type"
+                                    value="COMPANY"
+                                    checked={formData.type === 'COMPANY'}
+                                    onChange={(e) => handleInputChange(e)}
+                                >
                                     Persoana juridica
                                 </Radio>
                             </div>
@@ -83,32 +158,44 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         <div className="mb-4">
                             <h4>Nume Prenume / Denumire Societate</h4>
                             <Input
+                                name="name"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Nume Prenume / Denumire Societate"
+                                value={formData.name}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>VAT</h4>
                             <Input
+                                name="vat"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="VAT"
+                                value={formData.vat}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Email</h4>
                             <Input
+                                name="email"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Email"
+                                value={formData.email}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Telefon</h4>
                             <Input
+                                name="phone"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Telefon"
+                                value={formData.phone}
+                                onChange={handleInputChange}
                             />
                         </div>
 
@@ -116,37 +203,78 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                             <h4 className="mb-2">Adresa de facturare</h4>
                             <Input
                                 textArea
+                                name="billingAddress"
                                 className="rounded-xl"
                                 placeholder="Adresa de facturare..."
+                                value={formData.billingAddress}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Oras</h4>
                             <Input
+                                name="billingCity"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Oras"
+                                value={formData.billingCity}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Judet</h4>
                             <Input
+                                name="billingCounty"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Judet"
+                                value={formData.billingCounty}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Cod Postal</h4>
                             <Input
+                                name="billingPostalCode"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Cod Postal"
+                                value={formData.billingPostalCode}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="flex items-center mt-4">
-                            <Checkbox defaultChecked onChange={onCheck} />
+                            <input
+                                type="checkbox"
+                                name="sameAddressForShipping"
+                                checked={
+                                    formData.shippingAddress ===
+                                    formData.billingAddress
+                                }
+                                onChange={(e) => {
+                                    const isChecked = e.target.checked
+                                    if (isChecked) {
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            shippingAddress:
+                                                prev.billingAddress,
+                                            shippingCity: prev.billingCity,
+                                            shippingCounty: prev.billingCounty,
+                                            shippingPostalCode:
+                                                prev.billingPostalCode,
+                                        }))
+                                    } else {
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            shippingAddress: '',
+                                            shippingCity: '',
+                                            shippingCounty: '',
+                                            shippingPostalCode: '',
+                                        }))
+                                    }
+                                }}
+                            />
                             <h4 className="ml-2">
                                 Aceeasi adresa pentru livrare
                             </h4>
@@ -156,32 +284,44 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                             <h4 className="mb-2">Adresa de livrare</h4>
                             <Input
                                 textArea
+                                name="shippingAddress"
                                 className="rounded-xl"
                                 placeholder="Adresa de livrare..."
+                                value={formData.shippingAddress}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Oras</h4>
                             <Input
+                                name="shippingCity"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Oras"
+                                value={formData.shippingCity}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Judet</h4>
                             <Input
+                                name="shippingCounty"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Judet"
+                                value={formData.shippingCounty}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="mb-4">
                             <h4>Cod Postal</h4>
                             <Input
+                                name="shippingPostalCode"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 placeholder="Cod Postal"
+                                value={formData.shippingPostalCode}
+                                onChange={handleInputChange}
                             />
                         </div>
 
@@ -192,7 +332,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                                     color: 'white',
                                 }}
                                 className="bg-blue-600 text-white hover:grey-700 rounded px-4 py-2"
-                                onClick={onClose}
+                                type="submit"
                             >
                                 Salvează User
                             </Button>
