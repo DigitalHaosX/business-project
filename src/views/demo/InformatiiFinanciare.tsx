@@ -1,7 +1,62 @@
-import { Button, DatePicker, Dropdown, Input } from '@/components/ui'
-import React from 'react'
+import { Button, DatePicker, Dropdown, Input } from '../../components/ui'
+import React, { useEffect, useState } from 'react'
+
+import { fetchProjects } from './projectService'
+import { useParams } from 'react-router-dom'
+
+interface Proiect {
+    createDate: string
+    updateDate: string
+    id: string
+    name: string
+    description: string
+    type: string
+    createdById: number
+    status: string
+    checkpoint: string
+    projectClientId: number
+    taskCount: number
+    completedTaskCount: number
+    materialCost: number
+    laborCost: number
+    discount: number
+    discountType: string
+    paymentType: string
+    paymentDate: string
+    vat: number
+    totalCost: number
+    totalCostDiscounted: number
+    discountCalculated: number
+    vatCalculated: number
+    totalCostWithVat: number
+    discountedLaborCost: number
+}
 
 const InformatiiFinanciare = () => {
+    const { id } = useParams<{ id: string }>()
+    const [data, setData] = useState<Proiect[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const projects = await fetchProjects()
+                setData(projects)
+
+                console.log('Projects', projects)
+
+                const matchedProject = projects.find(
+                    (project: Proiect) => project.id.toString() === id,
+                )
+
+                console.log('Found Project:', matchedProject)
+            } catch (error) {
+                console.error('Error fetching projects:', error)
+            }
+        }
+
+        fetchData()
+    }, [id])
+
     return (
         <div>
             <div className="flex items-center justify-between mt-4 gap-4">

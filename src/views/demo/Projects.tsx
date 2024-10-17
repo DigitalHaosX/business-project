@@ -1,133 +1,44 @@
 import { useNavigate } from 'react-router-dom'
 import { Button, Card } from '../../components/ui'
 import CustomTable from './CustomTable'
-import { ColumnDef } from '@tanstack/react-table'
 import { HiPencil, HiTrash } from 'react-icons/hi'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ModalDelete from './ModalDelete'
 import ModalAddProjects from './ModalAddProjects'
 
-// Importing service functions
-import {
-    fetchProjects,
-    fetchTotalProjects,
-    fetchNewProjects,
-    fetchProgressProjects,
-    fetchFinishedProjects,
-} from './projectService'
-
-import { fetchUsers } from './homeService'
-
-interface Proiect {
-    createDate: string
-    updateDate: string
-    id: string
-    name: string
-    description: string
-    type: string
-    createdById: number
-    status: string
-    checkpoint: string
-    projectClientId: number
-    taskCount: number
-    completedTaskCount: number
-    materialCost: number
-    laborCost: number
-    discount: number
-    discountType: string
-    paymentType: string
-    paymentDate: string
-    vat: number
-    totalCost: number
-    totalCostDiscounted: number
-    discountCalculated: number
-    vatCalculated: number
-    totalCostWithVat: number
-    discountedLaborCost: number
-}
-interface User {
-    id: number
-    username: string
-    firstName: string
-    lastName: string
-    role: string
-    whitePoints: number
-    blackPoints: number
-}
-
-const Proiecte = () => {
+const Projects = () => {
     const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [data, setData] = useState<Proiect[]>([])
-    const [users, setUsers] = useState<User[]>([])
-    const [totalProjects, setTotalProjects] = useState<number | null>(null)
-    const [newProjects, setNewProjects] = useState<number | null>(null)
-    const [progressProjects, setProgressProjects] = useState<number | null>(
-        null,
-    )
-    const [finishedProjects, setFinishedProjects] = useState<number | null>(
-        null,
-    )
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
+    const [data, setData] = useState([
+        {
+            id: '1',
+            name: 'project1',
+            type: 'NEW',
+            description: 'This is the 1st project',
+            status: 'In Progress',
+            user: 'User Name',
+            actions: 'Edit/Delete',
+        },
+        {
+            id: '2',
+            name: 'project2',
+            type: 'NEW',
+            description: 'This is the 2nd project',
+            status: 'In Progress',
+            user: 'User Name',
+            actions: 'Edit/Delete',
+        },
+    ])
 
     const handleIdClick = (id: string) => {
-        navigate(`/proiecte/${id}`)
+        navigate(`/projects/${id}`)
     }
 
     const handleEdit = () => {
         console.log('Edit')
     }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const projects = await fetchProjects()
-                setData(projects)
-                console.log('Projects', projects)
-            } catch (error) {
-                console.error('Error fetching projects:', error)
-            }
-        }
-
-        fetchData()
-    }, [])
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userData: User[] = await fetchUsers() // Ensure fetchUsers returns User[]
-                setUsers(userData)
-                console.log('User data', userData)
-            } catch (error) {
-                console.error('Error fetching user data:', error)
-            }
-        }
-
-        fetchUserData()
-    }, [])
-
-    useEffect(() => {
-        const fetchStatistics = async () => {
-            try {
-                const total = await fetchTotalProjects()
-                setTotalProjects(total)
-
-                const newProjects = await fetchNewProjects()
-                setNewProjects(newProjects)
-
-                const progress = await fetchProgressProjects()
-                setProgressProjects(progress)
-
-                const finished = await fetchFinishedProjects()
-                setFinishedProjects(finished)
-            } catch (error) {
-                console.error('Error fetching statistics:', error)
-            }
-        }
-
-        fetchStatistics()
-    }, [])
 
     const handleDeleteClick = (id: string) => {
         setDeleteItemId(id)
@@ -158,12 +69,7 @@ const Proiecte = () => {
         setIsModalOpen(false)
     }
 
-    const getUserName = (userId: number) => {
-        const user = users.find((user) => user.id === userId)
-        return user ? `${user.firstName} ${user.lastName}` : 'Unknown'
-    }
-
-    const columns: ColumnDef<Proiect>[] = [
+    const columns = [
         {
             header: 'ID',
             accessorKey: 'id',
@@ -177,15 +83,15 @@ const Proiecte = () => {
             ),
         },
         {
-            header: 'Nume Proiect',
+            header: 'Project Name',
             accessorKey: 'name',
         },
         {
-            header: 'Categorie',
+            header: 'Category',
             accessorKey: 'type',
         },
         {
-            header: 'Descriere',
+            header: 'Description',
             accessorKey: 'description',
         },
         {
@@ -193,15 +99,12 @@ const Proiecte = () => {
             accessorKey: 'status',
         },
         {
-            header: 'Operator',
-            accessorKey: 'createdById',
-            cell: ({ row }) => (
-                <span>{getUserName(row.original.createdById)}</span>
-            ),
+            header: 'User',
+            accessorKey: 'user',
         },
         {
-            header: 'Actiuni',
-            accessorKey: 'actiuni',
+            header: 'Actions',
+            accessorKey: 'actions',
             cell: ({ row }) => (
                 <div className="flex space-x-2">
                     <button
@@ -224,7 +127,7 @@ const Proiecte = () => {
     return (
         <div>
             <div>
-                <h3 className="text-xl font-semibold mb-4">Proiecte</h3>
+                <h3 className="text-xl font-semibold mb-4">Projects</h3>
             </div>
             <div className="flex flex-row justify-between">
                 <Card
@@ -232,10 +135,8 @@ const Proiecte = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <h5 className="text-4xl font-bold">Proiecte</h5>
-                    <p className="mt-4 text-4xl font-bold">
-                        {totalProjects !== null ? totalProjects : 'N/A'}
-                    </p>
+                    <h5 className="text-4xl font-bold">Projects</h5>
+                    <p className="mt-4 text-4xl font-bold">30</p>
                 </Card>
                 <Card
                     clickable
@@ -243,32 +144,25 @@ const Proiecte = () => {
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
                     <h5 className="text-4xl font-bold">
-                        Proiecte in pregatire
+                        Projects Waiting Status
                     </h5>
-                    <p className="mt-4 text-4xl font-bold">
-                        {newProjects !== null ? newProjects : 'N/A'}
-                    </p>
+                    <p className="mt-4 text-4xl font-bold">10</p>
                 </Card>
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <h5 className="text-4xl font-bold">Proiecte in progres</h5>
-                    <p className="mt-4 text-4xl font-bold">
-                        {' '}
-                        {progressProjects !== null ? progressProjects : 'N/A'}
-                    </p>
+                    <h5 className="text-4xl font-bold">Projects In Progress</h5>
+                    <p className="mt-4 text-4xl font-bold">15</p>
                 </Card>
                 <Card
                     clickable
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl w-[300px] h-[200px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <h5 className="text-4xl font-bold">Proiecte finalizate</h5>
-                    <p className="mt-4 text-4xl font-bold">
-                        {finishedProjects !== null ? finishedProjects : 'N/A'}
-                    </p>
+                    <h5 className="text-4xl font-bold">Finished Projects</h5>
+                    <p className="mt-4 text-4xl font-bold">12</p>
                 </Card>
             </div>
             <div
@@ -287,7 +181,7 @@ const Proiecte = () => {
                             style={{ background: '#0188cc', color: 'white' }}
                             onClick={handleOpenModal}
                         >
-                            Adauga proiecte
+                            Add Projects
                         </Button>
                     }
                 />
@@ -301,7 +195,7 @@ const Proiecte = () => {
             <div>
                 <ModalDelete
                     isOpen={isDeleteModalOpen}
-                    message="Sigur doriti sa stergeti acest proiect?"
+                    message="Are you sure you want to delete this project?"
                     onConfirmDelete={handleConfirmDelete}
                     onClose={handleCancelDelete}
                 />
@@ -310,4 +204,4 @@ const Proiecte = () => {
     )
 }
 
-export default Proiecte
+export default Projects

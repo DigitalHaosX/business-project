@@ -17,7 +17,7 @@ const FooterContent = () => {
                 <span className="font-semibold">{`${APP_NAME}`}</span> All
                 rights reserved.
             </span>
-           {/*  <div className="">
+            <div className="">
                 <a
                     className="text-gray"
                     href="/#"
@@ -33,7 +33,7 @@ const FooterContent = () => {
                 >
                     Privacy & Policy
                 </a>
-            </div> */}
+            </div>
         </div>
     )
 }
@@ -44,7 +44,7 @@ export default function Footer({
     return (
         <footer
             className={classNames(
-                `footer flex flex-auto items-center h-16 ${PAGE_CONTAINER_GUTTER_X}`
+                `footer flex flex-auto items-center h-16 ${PAGE_CONTAINER_GUTTER_X}`,
             )}
         >
             {pageContainerType === 'contained' ? (

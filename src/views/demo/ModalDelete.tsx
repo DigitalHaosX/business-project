@@ -6,7 +6,7 @@ interface ModalDeleteProps {
     isOpen: boolean
     onClose: () => void
     onConfirmDelete: () => void
-    message: string // Add a message prop to accept dynamic text
+    message: string
 }
 
 const ModalDelete: React.FC<ModalDeleteProps> = ({
@@ -49,7 +49,7 @@ const ModalDelete: React.FC<ModalDeleteProps> = ({
             onRequestClose={onClose}
         >
             <div style={{ padding: '10px', textAlign: 'center' }}>
-                <h2 style={{ marginBottom: '20px' }}>Confirmare Ștergere</h2>
+                <h2 style={{ marginBottom: '20px' }}>Confirm Delete</h2>
                 <p style={{ marginBottom: '20px' }}>{message}</p>{' '}
                 <div className="flex justify-between">
                     <Button
@@ -57,14 +57,14 @@ const ModalDelete: React.FC<ModalDeleteProps> = ({
                         className="w-[120px] h-[40px]"
                         onClick={onConfirmDelete}
                     >
-                        Șterge
+                        Delete
                     </Button>
                     <Button
                         style={{ backgroundColor: '#6c757d', color: '#fff' }}
                         className="w-[120px] h-[40px]"
                         onClick={onClose}
                     >
-                        Anulează
+                        Cancel
                     </Button>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui'
 import React, { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
-import ModalSarcini from './ModalSarcini'
+import ModalSarcini from './ModalTasks'
 
 const InformatiiSarcini = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)

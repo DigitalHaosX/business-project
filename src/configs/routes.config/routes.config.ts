@@ -14,45 +14,33 @@ export const protectedRoutes = [
 
     /** Example purpose only, please remove */
     {
-        key: 'proiecte',
-        path: '/proiecte',
-        component: lazy(() => import('@/views/demo/Proiecte')),
+        key: 'projects',
+        path: '/projects',
+        component: lazy(() => import('@/views/demo/Projects')),
         authority: [],
     },
     {
-        key: 'proiecteDetails',
-        path: '/proiecte/:id',
-        component: lazy(() => import('@/views/demo/ProiecteDetails')),
+        key: 'projectsDetails',
+        path: '/projects/:id',
+        component: lazy(() => import('@/views/demo/ProjectsDetails')),
         authority: [],
     },
     {
-        key: 'documente',
-        path: '/documente',
-        component: lazy(() => import('@/views/demo/Documente')),
+        key: 'documents',
+        path: '/documents',
+        component: lazy(() => import('@/views/demo/Documents')),
         authority: [],
     },
     {
-        key: 'sarcini',
-        path: '/sarcini',
-        component: lazy(() => import('@/views/demo/Sarcini')),
+        key: 'tasks',
+        path: '/tasks',
+        component: lazy(() => import('@/views/demo/Tasks')),
         authority: [],
     },
     {
-        key: 'constatari',
-        path: '/constatari/:id?',
-        component: lazy(() => import('@/views/demo/Constatari')),
-        authority: [],
-    },
-    {
-        key: 'piese',
-        path: '/piese',
-        component: lazy(() => import('@/views/demo/Piese')),
-        authority: [],
-    },
-    {
-        key: 'clienti',
-        path: '/clienti',
-        component: lazy(() => import('@/views/demo/Clienti')),
+        key: 'customers',
+        path: '/customers',
+        component: lazy(() => import('@/views/demo/Customers')),
         authority: [],
     },
     {
@@ -60,19 +48,6 @@ export const protectedRoutes = [
         path: '/chat/ChatPage',
         component: lazy(() => import('@/views/demo/chat/ChatPage')),
         authority: [],
-    },
-    {
-        key: 'utilizatori',
-        path: '/utilizatori',
-        component: lazy(() => import('@/views/demo/Utilizatori')),
-        authority: [],
-    },
-    {
-        key: 'statusuri',
-        path: '/statusuri',
-        component: lazy(() => import('@/views/demo/Statusuri')),
-        authority: [],
-        subMenu: [],
     },
     {
         key: 'collapseMenu.item3',
@@ -105,9 +80,9 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'setari-cont.item5',
-        path: '/setari-cont',
-        component: lazy(() => import('@/views/demo/SetariCont')),
+        key: 'account-settings',
+        path: '/account-settings',
+        component: lazy(() => import('@/views/demo/AccountSettings')),
         authority: [],
     },
 ]

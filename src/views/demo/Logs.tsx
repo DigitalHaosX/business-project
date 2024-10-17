@@ -5,27 +5,23 @@ import Button from '@/components/ui/Button'
 const Logs = () => {
     const columns = [
         {
-            header: 'Actiune',
+            header: 'Action',
             accessorKey: 'actiune',
         },
         {
-            header: 'Ruta',
+            header: 'Type',
             accessorKey: 'ruta',
         },
         {
-            header: 'Utilizator',
+            header: 'User',
             accessorKey: 'utilizator',
         },
         {
-            header: 'Rol',
+            header: 'Date',
             accessorKey: 'rol',
         },
         {
-            header: 'Data',
-            accessorKey: 'data',
-        },
-        {
-            header: 'Statut',
+            header: 'Status',
             accessorKey: 'statut',
             cell: () => (
                 <Button
@@ -37,14 +33,14 @@ const Logs = () => {
             ),
         },
         {
-            header: 'Modificare',
+            header: 'View',
             accessorKey: 'modificare',
             cell: () => (
                 <Button
                     className="text-white rounded"
                     style={{ backgroundColor: '#0188cc' }}
                 >
-                    👁️ Vizualizeaza
+                    👁️ View
                 </Button>
             ),
         },
@@ -56,7 +52,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'Vizualizeaza',
         },
@@ -65,7 +61,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -74,7 +70,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -83,7 +79,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -92,7 +88,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -101,7 +97,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -110,7 +106,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -119,7 +115,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -128,7 +124,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -137,7 +133,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -146,7 +142,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -155,7 +151,7 @@ const Logs = () => {
             ruta: 'Pending',
             utilizator: 'John Doe',
             rol: '2024-09-10',
-            data: 'sss',
+
             statut: 'aaxxaayy',
             modificare: 'vizualizeaza',
         },
@@ -165,9 +161,9 @@ const Logs = () => {
         <div
             className="mt-4"
             style={{
-                border: '1px solid #d1d5db', // Tailwind's "gray-300" color
-                borderRadius: '8px', // Optional: adds rounded corners
-                padding: '16px', // Optional: adds padding inside the border
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                padding: '16px',
             }}
         >
             <CustomTable columns={columns} data={data} />

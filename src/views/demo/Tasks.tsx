@@ -1,68 +1,74 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Card } from '../../components/ui'
 import CustomTable from './CustomTable'
 import { HiPencil, HiTrash } from 'react-icons/hi'
-import ModalSarcini from './ModalSarcini'
-import {
-    fetchTotalTasks,
-    fetchToDoTasks,
-    fetchInProgress,
-    fetchDone,
-    fetchTasks,
-} from './sarciniService'
+import ModalTasks from './ModalTasks'
 import ModalDelete from './ModalDelete'
 
-const Sarcini = () => {
+const str = ''
+
+const isPalindrome = (str: string) => {
+    console.log('Word', str)
+    const reversed = str.split('').reverse().join('')
+    console.log('Reversed word', reversed)
+    return str === reversed
+}
+
+console.log(isPalindrome(str))
+
+const arr = [1, 3, 3, 5, 5, 45, 213, 34534, 22, 4, 5]
+
+const unique = [...new Set(arr)]
+
+console.log(unique)
+
+const shuffle = (arr) => {
+    return arr.sort(() => Math.random() - 0.5)
+}
+
+console.log(shuffle(arr))
+
+const mockTotalTasks = 10
+const mockToDoTasks = 4
+const mockInProgress = 3
+const mockDoneTasks = 3
+
+const mockData = [
+    {
+        id: '1',
+        name: 'Design the homepage',
+        description: 'Create the homepage for the new project',
+        status: 'In Progress',
+        priority: 'High',
+    },
+    {
+        id: '2',
+        name: 'Set up authentication',
+        description: 'Integrate OAuth login',
+        status: 'To Do',
+        priority: 'Medium',
+    },
+    {
+        id: '3',
+        name: 'Fix bugs in checkout flow',
+        description: 'Resolve payment gateway issues',
+        status: 'Done',
+        priority: 'High',
+    },
+    {
+        id: '4',
+        name: 'Write documentation',
+        description: 'Document the backend APIs',
+        status: 'To Do',
+        priority: 'Low',
+    },
+]
+
+const Tasks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [totalTasks, setTotalTasks] = useState<number | null>(null)
-    const [toDoTasks, setToDoTasks] = useState<number | null>(null)
-    const [inProgress, setInProgress] = useState<number | null>(null)
-    const [done, setDone] = useState<number | null>(null)
-    const [data, setData] = useState<any[]>([])
+    const [data, setData] = useState<any[]>(mockData)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
-
-    useEffect(() => {
-        const fetchAllData = async () => {
-            try {
-                const [tasks, todo, inprogress, done] = await Promise.all([
-                    fetchTotalTasks(),
-                    fetchToDoTasks(),
-                    fetchInProgress(),
-                    fetchDone(),
-                ])
-                setTotalTasks(tasks)
-                setToDoTasks(todo)
-                setInProgress(inprogress)
-                setDone(done)
-            } catch (error) {
-                console.error('Error fetching data:', error)
-            }
-        }
-
-        fetchAllData()
-    }, [])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const tasks = await fetchTasks()
-                // Format the data if needed to match your table structure
-                const formattedData = tasks.map((task: any) => ({
-                    id: task.id.toString(),
-                    name: task.name,
-                    description: task.description || 'N/A',
-                    status: task.status,
-                    priority: task.priority,
-                }))
-                setData(formattedData)
-            } catch (error) {
-                console.error('Error fetching data:', error)
-            }
-        }
-
-        fetchData()
-    }, [])
 
     const handleDeleteClick = (id: string) => {
         setDeleteItemId(id)
@@ -95,6 +101,11 @@ const Sarcini = () => {
     const handleCloseModal = () => {
         setIsModalOpen(false)
     }
+
+    const handleSaveNewTask = (newTask: any) => {
+        setData((prevData) => [...prevData, newTask])
+    }
+
     const columns = [
         {
             header: 'ID',
@@ -116,7 +127,6 @@ const Sarcini = () => {
             header: 'Priority',
             accessorKey: 'priority',
         },
-
         {
             header: 'Actiuni',
             accessorKey: 'actiuni',
@@ -142,14 +152,14 @@ const Sarcini = () => {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">Sarcini</h3>
+                <h3 className="text-3xl font-semibold mb-4">Tasks</h3>
             </div>
             <div className="flex flex-row justify-between gap-4 ">
                 <Card
                     header={
                         <div className="flex justify-between items-center">
                             <span className="text-3xl font-bold text-black">
-                                Sarcini
+                                Tasks
                             </span>
                         </div>
                     }
@@ -157,15 +167,13 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">
-                        {totalTasks !== null ? totalTasks : 'N/A'}
-                    </p>
+                    <p className=" text-3xl font-bold">{mockTotalTasks}</p>
                 </Card>
                 <Card
                     header={
                         <div className="flex justify-between items-center">
                             <span className="text-3xl font-bold text-black">
-                                Sarcini in asteptare
+                                Tasks in waiting
                             </span>
                         </div>
                     }
@@ -173,15 +181,13 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">
-                        {toDoTasks !== null ? toDoTasks : 'N/A'}
-                    </p>
+                    <p className=" text-3xl font-bold">{mockToDoTasks}</p>
                 </Card>
                 <Card
                     header={
                         <div className="flex justify-between items-center">
                             <span className="text-3xl font-bold text-black">
-                                Sarcini in progres
+                                Tasks in progress
                             </span>
                         </div>
                     }
@@ -189,15 +195,13 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">
-                        {inProgress !== null ? inProgress : 'N/A'}
-                    </p>
+                    <p className=" text-3xl font-bold">{mockInProgress}</p>
                 </Card>
                 <Card
                     header={
                         <div className="flex justify-between items-center">
                             <span className="text-3xl font-bold text-black">
-                                Sarcini finalizate
+                                Finished Tasks
                             </span>
                         </div>
                     }
@@ -205,9 +209,7 @@ const Sarcini = () => {
                     className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl  w-[330px] h-[220px]"
                     onClick={(e) => console.log('Card Clickable', e)}
                 >
-                    <p className=" text-3xl font-bold">
-                        {done !== null ? done : 'N/A'}
-                    </p>
+                    <p className=" text-3xl font-bold">{mockDoneTasks}</p>
                 </Card>
             </div>
             <div
@@ -221,9 +223,7 @@ const Sarcini = () => {
                 <CustomTable columns={columns} data={data} />
             </div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4 mt-4">
-                    Toate Sarcinile
-                </h3>
+                <h3 className="text-3xl font-semibold mb-4 mt-4">All Tasks</h3>
             </div>
             <div
                 className="mt-4"
@@ -241,16 +241,20 @@ const Sarcini = () => {
                             style={{ background: '#0188cc', color: 'white' }}
                             onClick={handleOpenModal}
                         >
-                            Adauga sarcini
+                            Add Tasks
                         </Button>
                     }
                 />
             </div>
             <div>
-                <ModalSarcini isOpen={isModalOpen} onClose={handleCloseModal} />
+                <ModalTasks
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    onSave={handleSaveNewTask}
+                />
                 <ModalDelete
                     isOpen={isDeleteModalOpen}
-                    message="Sigur doriti sa stergeti aceasta sarcina?"
+                    message="Are you sure you want to delete this task?"
                     onConfirmDelete={handleConfirmDelete}
                     onClose={handleCancelDelete}
                 />
@@ -259,4 +263,4 @@ const Sarcini = () => {
     )
 }
 
-export default Sarcini
+export default Tasks

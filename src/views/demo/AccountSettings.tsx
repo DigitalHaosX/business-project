@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Dropdown } from '@/components/ui'
 
-const SetariCont = () => {
+const AccountSettings = () => {
     return (
         <div
             className="mt-4"
@@ -19,20 +19,20 @@ const SetariCont = () => {
                 <HiUserCircle className="hover:shadow-lg transition duration-150 ease-in-out w-[100px] h-[100px]" />
 
                 <div className="flex flex-col">
-                    <p>Imagine profil</p>
+                    <p>Image</p>
                     <p>PNG, JPEG, sub 15 MB</p>
                 </div>
                 <div className="flex items-center gap-2 ml-auto">
-                    <Button shape="circle">Incarca imagine</Button>
+                    <Button shape="circle">Upload Image</Button>
                     <Button shape="circle">Delete</Button>
                 </div>
             </div>
             <div className="flex items-center justify-between mt-4 gap-4">
                 <div>
-                    <h4>Nume Prenume</h4>
+                    <h4>Firstname Lastname</h4>
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4 mt-4"
-                        placeholder="Nume Prenume"
+                        placeholder="Firstname Lastname"
                     />
                 </div>
                 <div>
@@ -50,30 +50,30 @@ const SetariCont = () => {
                 >
                     <Dropdown
                         className="flex items-center justify-center"
-                        title="Limba platforma"
+                        title="Language"
                     >
-                        <Dropdown.Item eventKey="a">Romana</Dropdown.Item>
-                        <Dropdown.Item eventKey="b">Engleza</Dropdown.Item>
+                        <Dropdown.Item eventKey="a">Romanian</Dropdown.Item>
+                        <Dropdown.Item eventKey="b">English</Dropdown.Item>
                     </Dropdown>
                 </Button>
             </div>
             <div className="mt-4">
-                <h4>Parola</h4>
-                <p>Modifica parola curenta</p>
+                <h4>Password</h4>
+                <p>Change Password</p>
             </div>
             <div className="flex items-center justify-between gap-4 mt-4">
                 <div>
-                    <h4>Parola curenta</h4>
+                    <h4>Current Password</h4>
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4"
-                        placeholder="Parola curenta"
+                        placeholder="Current Password"
                     />
                 </div>
                 <div>
-                    <h4>Parola noua</h4>
+                    <h4>New Password</h4>
                     <Input
                         className="w-[650px] h-[40px] rounded-full mb-4"
-                        placeholder="Parola noua"
+                        placeholder="New Password"
                     />
                 </div>
             </div>
@@ -82,11 +82,11 @@ const SetariCont = () => {
                     className="flex justify-center items-center w-[650px] h-[40px]"
                     shape="circle"
                 >
-                    Salveaza
+                    Save
                 </Button>
             </div>
         </div>
     )
 }
 
-export default SetariCont
+export default AccountSettings

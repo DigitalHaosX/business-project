@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:8080/api/projects'
 const AUTH_HEADER = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYyMjU2NTYsImV4cCI6MTcyNjMxMjA1Nn0.lMY80QViuEYyX6al6P0c-iNNBh1dtwR6cz4M7MtPeL8aJ1zW4reGIQTFusYDbVf8Ywj35daBqcGR-KDuH7V6DA',
 }
 
 // Fetch all projects
@@ -49,7 +49,7 @@ const API_URL_COMM = 'http://localhost:8080/api/projects'
 const AUTH_HEADER_COMM = {
     accept: 'application/json',
     Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
+        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYyMjU2NTYsImV4cCI6MTcyNjMxMjA1Nn0.lMY80QViuEYyX6al6P0c-iNNBh1dtwR6cz4M7MtPeL8aJ1zW4reGIQTFusYDbVf8Ywj35daBqcGR-KDuH7V6DA',
 }
 
 export const updateProjectDescription = async (
@@ -121,7 +121,7 @@ export const updateProject = async (projectId, updatedData) => {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization:
-                        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
+                        'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYyMjU2NTYsImV4cCI6MTcyNjMxMjA1Nn0.lMY80QViuEYyX6al6P0c-iNNBh1dtwR6cz4M7MtPeL8aJ1zW4reGIQTFusYDbVf8Ywj35daBqcGR-KDuH7V6DA',
                 },
                 body: JSON.stringify(updatedData),
             },
@@ -146,7 +146,7 @@ export const addProject = async (newProjectData) => {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization:
-                    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYxNDgyOTcsImV4cCI6MTcyNjIzNDY5N30.YSrZtkh1L7BRuTIX1Uvct_DzvPgRI5qUzqxCtfR8YsgI4wfqFee1jlYM6Q_QaERHMR57DYybVaRKKXsOfe3RoQ',
+                    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZWkucGFkdXJhcnUwNUBnbWFpbC5jb20iLCJpYXQiOjE3MjYyMjU2NTYsImV4cCI6MTcyNjMxMjA1Nn0.lMY80QViuEYyX6al6P0c-iNNBh1dtwR6cz4M7MtPeL8aJ1zW4reGIQTFusYDbVf8Ywj35daBqcGR-KDuH7V6DA',
             },
             body: JSON.stringify(newProjectData), // Send new project data in the body
         })

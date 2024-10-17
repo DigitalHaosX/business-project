@@ -9,7 +9,7 @@ const MessageInput = () => {
                 placeholder="Type your message..."
             />
             <button className="ml-4 h-12 w-24 bg-blue-500 text-white rounded-full">
-                Trimite
+                Send
             </button>
         </div>
     )

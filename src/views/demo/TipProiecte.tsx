@@ -1,6 +1,6 @@
 import CustomTable from './CustomTable'
 import { HiPencil, HiTrash } from 'react-icons/hi'
-import { Button } from '@/components/ui'
+import { Button } from '../../components/ui'
 
 const TipProiecte = () => {
     const handleEdit = () => {

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Checkbox, Dropdown, Input } from '../../components/ui'
+import { Button, Dropdown, Input } from '../../components/ui'
 import Radio from '../../components/ui/Radio'
 import { fetchClients, updateClient } from './clientService'
 
@@ -21,6 +21,14 @@ interface Client {
     shippingPostalCode: string
 }
 
+/* const formatDateForInput = (dateString: string) => {
+    const date = new Date(dateString)
+    const year = date.getFullYear()
+    const month = `0${date.getMonth() + 1}`.slice(-2)
+    const day = `0${date.getDate()}`.slice(-2)
+    return `${year}-${month}-${day}`
+} */
+
 const InformatiiClienti = () => {
     const [clients, setClients] = useState<Client[]>([])
     const [selectedClientId, setSelectedClientId] = useState<number | null>(
@@ -40,6 +48,7 @@ const InformatiiClienti = () => {
     const [shippingPostalCode, setShippingPostalCode] = useState<string>('')
     const [clientType, setClientType] = useState<string>('COMPANY')
     const [sameAddress, setSameAddress] = useState<boolean>(false)
+    const [createDate, setCreateDate] = useState<string>('')
 
     useEffect(() => {
         const fetchClientData = async () => {
@@ -74,6 +83,7 @@ const InformatiiClienti = () => {
                 setShippingCounty(selectedClient.shippingCounty)
                 setShippingPostalCode(selectedClient.shippingPostalCode)
                 setClientType(selectedClient.type)
+                // setCreateDate(selectedClient.createDate)
             }
         }
     }, [selectedClientId, clients])
@@ -119,6 +129,7 @@ const InformatiiClienti = () => {
                 shippingCity: shippingCity.trim(),
                 shippingCounty: shippingCounty.trim(),
                 shippingPostalCode: shippingPostalCode.trim(),
+                // createDate: createDate,
             }
 
             // Validate required fields
@@ -140,6 +151,10 @@ const InformatiiClienti = () => {
             alert(`Failed to update client: ${error.message}`)
         }
     }
+
+    /* const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setCreateDate(e.target.value)
+    } */
 
     return (
         <div>
@@ -307,10 +322,10 @@ const InformatiiClienti = () => {
                 <div>
                     <h4>Termen de livrare</h4>
                     <Input
+                        type="date"
                         className="w-[500px] h-[40px] rounded-full mb-4 mt-4"
-                        placeholder="Termen de livrare"
-                        value={clientType}
-                        onChange={(e) => setClientType(e.target.value)}
+                        value={createDate}
+                        // onChange={handleDateChange}
                     />
                 </div>
             </div>

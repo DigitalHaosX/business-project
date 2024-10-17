@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Card, Dropdown, Input } from '../../components/ui'
-import { HiMinusCircle, HiPlusCircle, HiUserCircle } from 'react-icons/hi'
-import {
-    fetchProjects,
-    updateProjectDescription,
-    updateProjectType,
-    updateProject,
-} from './projectService'
+import { HiUserCircle } from 'react-icons/hi'
+import { fetchProjects, updateProject } from './projectService'
 import { useParams } from 'react-router-dom'
-import { fetchUsers } from '../../views/demo/homeService'
+import { fetchUsers } from './homeService'
 
 interface Proiect {
     createDate: string
@@ -108,7 +103,7 @@ const InformatiiProiect = () => {
 
                 // Find the project with the matching id from the URL
                 const matchedProject = projects.find(
-                    (project) => project.id.toString() === id.toString(),
+                    (project: Proiect) => project.id.toString() === id,
                 )
 
                 // Check if a matching project is found

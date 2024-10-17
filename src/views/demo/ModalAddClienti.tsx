@@ -13,10 +13,6 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
     isOpen,
     onClose,
 }) => {
-    /* const onCheck = (value: boolean, e: ChangeEvent<HTMLInputElement>) => {
-        console.log(value, e)
-    } */
-
     const [formData, setFormData] = useState({
         type: 'COMPANY', // default value
         name: '',
@@ -134,7 +130,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                 >
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <h4>Tip:</h4>
+                            <h4>Type:</h4>
                             <div className="flex items-center gap-4 mt-2">
                                 <Radio
                                     name="type"
@@ -142,7 +138,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                                     checked={formData.type === 'PERSON'}
                                     onChange={(e) => handleInputChange(e)}
                                 >
-                                    Persoana fizica
+                                    Individual
                                 </Radio>
                                 <Radio
                                     name="type"
@@ -150,13 +146,13 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                                     checked={formData.type === 'COMPANY'}
                                     onChange={(e) => handleInputChange(e)}
                                 >
-                                    Persoana juridica
+                                    Company
                                 </Radio>
                             </div>
                         </div>
 
                         <div className="mb-4">
-                            <h4>Nume Prenume / Denumire Societate</h4>
+                            <h4>Name / Business name</h4>
                             <Input
                                 name="name"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -189,7 +185,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Telefon</h4>
+                            <h4>Phone</h4>
                             <Input
                                 name="phone"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -200,7 +196,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="mb-2">Adresa de facturare</h4>
+                            <h4 className="mb-2">Billing Address</h4>
                             <Input
                                 textArea
                                 name="billingAddress"
@@ -212,7 +208,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Oras</h4>
+                            <h4>City</h4>
                             <Input
                                 name="billingCity"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -223,7 +219,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Judet</h4>
+                            <h4>County</h4>
                             <Input
                                 name="billingCounty"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -234,7 +230,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Cod Postal</h4>
+                            <h4>Postal Code</h4>
                             <Input
                                 name="billingPostalCode"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -275,13 +271,11 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                                     }
                                 }}
                             />
-                            <h4 className="ml-2">
-                                Aceeasi adresa pentru livrare
-                            </h4>
+                            <h4 className="ml-2">Same address for shipping</h4>
                         </div>
 
                         <div className="mt-4">
-                            <h4 className="mb-2">Adresa de livrare</h4>
+                            <h4 className="mb-2">Shipping Address</h4>
                             <Input
                                 textArea
                                 name="shippingAddress"
@@ -293,7 +287,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Oras</h4>
+                            <h4>City</h4>
                             <Input
                                 name="shippingCity"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -304,7 +298,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Judet</h4>
+                            <h4>County</h4>
                             <Input
                                 name="shippingCounty"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -315,7 +309,7 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Cod Postal</h4>
+                            <h4>Postal Code</h4>
                             <Input
                                 name="shippingPostalCode"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -334,13 +328,13 @@ const ModalAddClienti: React.FC<ModalAddClientiProps> = ({
                                 className="bg-blue-600 text-white hover:grey-700 rounded px-4 py-2"
                                 type="submit"
                             >
-                                Salvează User
+                                Save Customer
                             </Button>
                             <Button
                                 className="bg-gray-200 text-gray-700 rounded px-4 py-2"
                                 onClick={onClose}
                             >
-                                Înapoi
+                                Cancel
                             </Button>
                         </div>
                     </form>

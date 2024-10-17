@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
-import Steps from '@/components/ui/Steps'
-import { Card } from '@/components/ui'
-import Tabs from '@/components/ui/Tabs'
+import Steps from '../../components/ui/Steps'
+import { Card } from '../../components/ui'
+import Tabs from '../../components/ui/Tabs'
 import InformatiiClienti from './InformatiiClient'
 import InformatiiProiect from './InformatiiProiect'
 import InformatiiFinanciare from './InformatiiFinanciare'
@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 const { TabNav, TabList, TabContent } = Tabs
 
-const ProiectDetails = () => {
+const ProjectsDetails = () => {
     const { id } = useParams<{ id: string }>()
 
     // Initialize state to track the current step
@@ -139,4 +139,4 @@ const ProiectDetails = () => {
     )
 }
 
-export default ProiectDetails
+export default ProjectsDetails

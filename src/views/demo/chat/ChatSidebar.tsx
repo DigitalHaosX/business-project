@@ -2,25 +2,25 @@ import React from 'react'
 
 const contacts = [
     {
-        name: 'Operator #1',
+        name: 'User #1',
         lastMessage: 'lastMessage',
         time: '17:30',
         unreadCount: 2,
     },
     {
-        name: 'Piesar',
+        name: 'User #2',
         lastMessage: 'lastMessage',
         time: '17:30',
         unreadCount: 0,
     },
     {
-        name: 'Operator #1',
+        name: 'User #3',
         lastMessage: 'lastMessage',
         time: '05.10.2024',
         unreadCount: 0,
     },
     {
-        name: 'Operator #1',
+        name: 'User #4',
         lastMessage: 'lastMessage',
         time: '17:30',
         unreadCount: 0,

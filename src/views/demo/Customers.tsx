@@ -1,47 +1,38 @@
 import { Button } from '../../components/ui'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from './CustomTable'
 import ModalAddClienti from './ModalAddClienti'
 import ModalDelete from './ModalDelete'
-import { fetchClients } from './clientService'
-
-interface Client {
-    id: number
-    type: string
-    name: string
-    vat: string
-    email: string
-    phone: string
-    billingAddress: string
-    billingCity: string
-    billingCounty: string
-    billingPostalCode: string
-    shippingAddress: string
-    shippingCity: string
-    shippingCounty: string
-    shippingPostalCode: string
-}
 
 const Clienti = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [data, setData] = useState<Client[]>([])
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const clients = await fetchClients()
-                setData(clients)
-                console.log('Clients', clients)
-            } catch (error) {
-                console.error('Error fetching clients:', error)
-            }
-        }
-
-        fetchData()
-    }, [])
+    const [data, setData] = useState([
+        {
+            id: '1',
+            name: 'client1',
+            type: 'NEW',
+            description: 'This is the 1st customer',
+            vat: '19%',
+            email: 'first@customer.com',
+            phone: '0750xxx001',
+            billingAddress: '21 st NY',
+            shippingAddress: '21 st NY',
+        },
+        {
+            id: '2',
+            name: 'client2',
+            type: 'NEW',
+            description: 'This is the 2nd customer',
+            vat: '19%',
+            email: 'second@customer.com',
+            phone: '0750xxx001',
+            billingAddress: '22 st NY',
+            shippingAddress: '22 st NY',
+        },
+    ])
 
     const handleEdit = () => {
         console.log('Edit')
@@ -134,7 +125,7 @@ const Clienti = () => {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">Clienti</h3>
+                <h3 className="text-3xl font-semibold mb-4">Customers</h3>
             </div>
             <div
                 className="mt-4"
@@ -152,7 +143,7 @@ const Clienti = () => {
                             style={{ background: '#0188cc', color: 'white' }}
                             onClick={handleOpenModal}
                         >
-                            Adauga clienti
+                            Add customers
                         </Button>
                     }
                 />
@@ -166,7 +157,7 @@ const Clienti = () => {
             <div>
                 <ModalDelete
                     isOpen={isDeleteModalOpen}
-                    message="Sigur doriti sa stergeti acest proiect?"
+                    message="Are you sure you want to delete this customer?"
                     onConfirmDelete={handleConfirmDelete}
                     onClose={handleCancelDelete}
                 />

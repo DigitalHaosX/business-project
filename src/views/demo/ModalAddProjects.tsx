@@ -16,7 +16,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
         name: '',
         description: '',
         type: '',
-        status: 'NEW',
+        status: '',
         checkpoint: '',
         materialCost: 0,
         laborCost: 0,
@@ -108,30 +108,16 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
             onRequestClose={onClose}
         >
             <div className="flex">
-                {/*  <div className="w-1/3 bg-gray-100 p-8">
-                    <div className="flex flex-col items-center relative">
-                        <div className="w-24 h-24 bg-gray-300 rounded-full mb-4 flex items-center justify-center">
-                            <HiUserCircle className="text-7xl text-gray-500" />
-                        </div>
-                        <h3 className="text-xl font-semibold">Account Info</h3>
-                        <p className="text-gray-600">
-                            Add here the user account info.
-                        </p>
-                    </div>
-                </div> */}
-
-                {/* Main Form */}
-
                 <div
                     className="w-full p-8 overflow-y-auto"
                     style={{ maxHeight: '80vh' }}
                 >
                     <div className="flex justify-start items-center mb-4">
-                        <h1>Adauga proiect nou</h1>
+                        <h1>Add New Project</h1>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <h4>Nume proiect</h4>
+                            <h4>Project Name</h4>
                             <Input
                                 name="name"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -142,7 +128,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Descriere</h4>
+                            <h4>Description</h4>
                             <Input
                                 textArea
                                 name="description"
@@ -154,7 +140,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Tip proiect</h4>
+                            <h4>Project Type</h4>
                             <Input
                                 name="type"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -192,7 +178,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4> Cost Materiale</h4>
+                            <h4>Parts Cost</h4>
                             <Input
                                 name="materialCost"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -203,7 +189,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Cost Manopera</h4>
+                            <h4>Labour Cost</h4>
                             <Input
                                 name="laborCost"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -225,20 +211,20 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Tip Discount</h4>
+                            <h4>Discount Type</h4>
                             <select
                                 name="discountType"
                                 className="w-full h-[40px] rounded-full mt-2"
                                 value={projectData.discountType}
                                 onChange={handleInputChange}
                             >
-                                <option value="PERCENTAGE">Procent</option>
-                                <option value="FIXED">FIX</option>
+                                <option value="PERCENTAGE">Percentage</option>
+                                <option value="FIXED">Fixed</option>
                             </select>
                         </div>
 
                         <div className="mb-4">
-                            <h4>Metoda de plata</h4>
+                            <h4>Payment Method</h4>
                             <select
                                 name="paymentType"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -251,7 +237,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>Data platii</h4>
+                            <h4>Payment Date</h4>
                             <Input
                                 name="paymentDate"
                                 type="date"
@@ -265,7 +251,7 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                         </div>
 
                         <div className="mb-4">
-                            <h4>TVA</h4>
+                            <h4>VAT</h4>
                             <Input
                                 name="vat"
                                 className="w-full h-[40px] rounded-full mt-2"
@@ -275,22 +261,22 @@ const ModalAddProjects: React.FC<ModalAddProjectsProps> = ({
                             />
                         </div>
 
-                        <div className="flex justify-between space-x-4">
+                        <div className="flex flex-row items-center justify-between space-x-4">
                             <Button
                                 style={{
                                     background: '#0188cc',
                                     color: 'white',
                                 }}
-                                className="bg-blue-600 text-white hover:grey-700 rounded px-4 py-2"
+                                className="bg-blue-600 w-full text-white hover:grey-700 rounded px-4 py-2"
                                 type="submit"
                             >
-                                Salveaza Proiect
+                                Save Project
                             </Button>
                             <Button
-                                className="bg-gray-200 text-gray-700 hover:grey-700 rounded px-4 py-2"
+                                className="bg-gray-200 w-full text-gray-700 hover:grey-700 rounded px-4 py-2"
                                 onClick={onClose}
                             >
-                                Inchide
+                                Close
                             </Button>
                         </div>
                     </form>
